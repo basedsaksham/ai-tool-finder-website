@@ -155,9 +155,10 @@ interface ToolCard3DProps {
   position: [number, number, number];
   onClick?: () => void;
   index: number;
+  isHighlighted?: boolean;
 }
 
-function ToolCard3D({ tool, position, onClick, index }: ToolCard3DProps) {
+function ToolCard3D({ tool, position, onClick, index, isHighlighted }: ToolCard3DProps) {
   const meshRef = useRef<Mesh>(null);
   const pricingRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
@@ -168,15 +169,16 @@ function ToolCard3D({ tool, position, onClick, index }: ToolCard3DProps) {
       // Individual rotation with slight variation
       meshRef.current.rotation.y += delta * (0.3 + index * 0.1);
       meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime + index) * 0.1;
-      
-      // Dynamic scaling
-      const scale = hovered ? 1.2 : clicked ? 0.9 : 1;
+
+      // Dynamic scaling with highlight effect
+      const baseScale = isHighlighted ? 1.15 : 1;
+      const scale = hovered ? baseScale * 1.1 : clicked ? baseScale * 0.9 : baseScale;
       meshRef.current.scale.lerp(new Vector3(scale, scale, scale), 0.1);
-      
+
       // Floating animation
       meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime + index * 0.5) * 0.2;
     }
-    
+
     if (pricingRef.current) {
       pricingRef.current.rotation.y = meshRef.current?.rotation.y || 0;
     }
@@ -208,35 +210,45 @@ function ToolCard3D({ tool, position, onClick, index }: ToolCard3DProps) {
       >
         <boxGeometry args={[2, 2.5, 0.3]} />
         <meshStandardMaterial
-          color={hovered ? '#E50914' : '#1a1a1a'}
+          color={hovered || isHighlighted ? '#E50914' : '#1a1a1a'}
           metalness={0.3}
           roughness={0.4}
         />
       </mesh>
-      
+
       {/* Pricing indicator */}
       <mesh ref={pricingRef} position={[0, -0.8, 0.16]}>
         <boxGeometry args={[1.8, 0.4, 0.1]} />
         <meshStandardMaterial
           color={getPricingColor()}
           emissive={getPricingColor()}
-          emissiveIntensity={hovered ? 0.3 : 0.1}
+          emissiveIntensity={hovered || isHighlighted ? 0.4 : 0.1}
         />
       </mesh>
-      
-      {/* Hover glow effect */}
-      {hovered && (
+
+      {/* Enhanced glow effect */}
+      {(hovered || isHighlighted) && (
         <mesh position={[0, 0, -0.1]}>
           <boxGeometry args={[2.2, 2.7, 0.1]} />
           <meshStandardMaterial
             color="#E50914"
             transparent
-            opacity={0.3}
+            opacity={isHighlighted ? 0.5 : 0.3}
             emissive="#E50914"
-            emissiveIntensity={0.5}
+            emissiveIntensity={isHighlighted ? 0.7 : 0.5}
           />
         </mesh>
       )}
+
+      {/* Tool category indicator */}
+      <mesh position={[0, 0.8, 0.16]}>
+        <boxGeometry args={[1.6, 0.2, 0.05]} />
+        <meshStandardMaterial
+          color="#ffffff"
+          emissive="#ffffff"
+          emissiveIntensity={hovered ? 0.2 : 0.05}
+        />
+      </mesh>
     </group>
   );
 }
