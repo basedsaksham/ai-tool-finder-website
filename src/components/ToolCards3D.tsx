@@ -230,11 +230,18 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         {visibleTools.map((tool, index) => {
           const position = cardPositions[index];
 
-          // Calculate screen position based on 3D card position
-          const screenX = 50 + (position[0] / 8) * 40; // Convert 3D X to screen percentage
-          const screenY = 50 - (position[2] / 8) * 40; // Convert 3D Z to screen percentage
-          const scale = 1 - Math.abs(position[2]) / 12; // Scale based on depth
-          const opacity = Math.max(0.7, 1 - Math.abs(position[2]) / 10);
+          // Calculate screen position relative to camera for better tracking
+          const relativeX = position[0] - cameraPos.x;
+          const relativeZ = position[2] - cameraPos.z;
+
+          // Project to screen coordinates
+          const screenX = 50 + (relativeX / 6) * 30;
+          const screenY = 50 + (relativeZ / 6) * 30;
+
+          // Calculate depth and scale
+          const depth = Math.sqrt(relativeX * relativeX + relativeZ * relativeZ);
+          const scale = Math.max(0.6, Math.min(1.2, 8 / (depth + 4)));
+          const opacity = Math.max(0.6, Math.min(1, 8 / (depth + 2)));
 
           return (
             <div
