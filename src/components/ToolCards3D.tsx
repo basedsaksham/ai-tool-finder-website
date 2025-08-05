@@ -261,32 +261,33 @@ interface ToolCards3DProps {
 const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
   const [isDragging, setIsDragging] = useState(false);
+  const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
 
   return (
-    <div 
+    <div
       className="h-96 w-full relative overflow-hidden rounded-xl"
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}
       onMouseLeave={() => setIsDragging(false)}
     >
-      <Canvas 
+      <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
         style={{ background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a1a1a 100%)' }}
       >
         {/* Background elements */}
         <ParticleBackground />
         <FloatingShapes />
-        
+
         {/* Lighting setup */}
         <ambientLight intensity={0.4} />
         <pointLight position={[10, 10, 10]} intensity={1} color="#ffffff" />
         <pointLight position={[-10, -10, -10]} intensity={0.6} color="#E50914" />
         <pointLight position={[0, 10, -10]} intensity={0.4} color="#3b82f6" />
         <pointLight position={[5, -5, 5]} intensity={0.3} color="#22c55e" />
-        
+
         {/* Interactive camera */}
         <InteractiveCamera />
-        
+
         {/* Tool cards in a dynamic arrangement */}
         {visibleTools.map((tool, index) => {
           const angle = (index / visibleTools.length) * Math.PI * 2;
@@ -294,7 +295,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           const x = Math.cos(angle) * radius;
           const z = Math.sin(angle) * radius;
           const y = Math.sin(index * 0.5) * 0.5; // Varied heights
-          
+
           return (
             <ToolCard3D
               key={tool.id}
@@ -302,43 +303,80 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
               position={[x, y, z]}
               onClick={() => onToolClick?.(tool)}
               index={index}
+              isHighlighted={highlightedTool === index}
             />
           );
         })}
       </Canvas>
-      
-      {/* Enhanced overlay */}
+
+      {/* Enhanced overlay with synchronized highlighting */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Top gradient overlay */}
         <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/20 to-transparent" />
-        
+
         {/* Interactive instructions */}
         <div className="absolute top-4 left-4 text-white/80">
           <p className="text-sm font-medium">
             {isDragging ? '🎯 Exploring...' : '🖱️ Move mouse to explore'}
           </p>
         </div>
-        
-        {/* Tool names with dynamic visibility */}
+
+        {/* Tool details overlay */}
+        <div className="absolute top-4 right-4 text-right text-white/80">
+          {highlightedTool !== null && (
+            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+              <h3 className="font-semibold text-white">{visibleTools[highlightedTool].name}</h3>
+              <p className="text-sm text-white/60">{visibleTools[highlightedTool].category}</p>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-xs px-2 py-1 rounded bg-white/20">
+                  {visibleTools[highlightedTool].pricing.type}
+                </span>
+                <span className="text-xs text-yellow-400">★ {visibleTools[highlightedTool].rating}</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Tool names with synchronized highlighting */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-          <div className="flex flex-wrap justify-center gap-2 max-w-md">
+          <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
             {visibleTools.map((tool, index) => (
               <div
                 key={tool.id}
-                className="group relative"
+                className={`group relative transition-all duration-300 cursor-pointer pointer-events-auto ${
+                  highlightedTool === index ? 'scale-110' : ''
+                }`}
                 style={{
                   animationDelay: `${index * 100}ms`,
                 }}
+                onMouseEnter={() => setHighlightedTool(index)}
+                onMouseLeave={() => setHighlightedTool(null)}
+                onClick={() => onToolClick?.(tool)}
               >
-                <span className="text-xs bg-gradient-to-r from-black/60 to-black/40 text-white/90 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20">
+                <span className={`text-xs px-3 py-2 rounded-full border backdrop-blur-sm transition-all duration-300 ${
+                  highlightedTool === index
+                    ? 'bg-red-500/40 text-white border-red-500/60 shadow-lg shadow-red-500/20'
+                    : 'bg-gradient-to-r from-black/60 to-black/40 text-white/90 border-white/10 hover:bg-white/20'
+                }`}>
                   {tool.name}
                 </span>
-                <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500 opacity-60 animate-pulse" />
+                <div className={`absolute -top-1 -right-1 w-2 h-2 rounded-full transition-all duration-300 ${
+                  highlightedTool === index
+                    ? 'bg-red-500 animate-ping'
+                    : 'bg-gradient-to-r from-red-500 to-orange-500 opacity-60 animate-pulse'
+                }`} />
+
+                {/* Category badge */}
+                <div className={`absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs px-2 py-1 rounded bg-black/60 text-white/70 border border-white/10 transition-all duration-300 ${
+                  highlightedTool === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                }`}>
+                  {tool.category}
+                </div>
               </div>
             ))}
           </div>
         </div>
-        
+
         {/* Corner accent */}
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-radial from-red-500/20 to-transparent rounded-full" />
       </div>
