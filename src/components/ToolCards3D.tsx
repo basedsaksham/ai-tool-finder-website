@@ -93,21 +93,68 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
       ref={containerRef}
       className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm"
     >
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        {/* Floating orbs */}
-        {Array.from({ length: 6 }).map((_, i) => (
+      {/* Enhanced animated background */}
+      <div className="absolute inset-0">
+        {/* Animated gradient rays */}
+        <div className="absolute inset-0 opacity-30">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={`ray-${i}`}
+              className="absolute w-px h-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent"
+              style={{
+                left: `${12.5 * (i + 1)}%`,
+                animationDelay: `${i * 0.3}s`,
+                animation: `pulse 3s ease-in-out infinite`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Floating geometric shapes */}
+        {Array.from({ length: 12 }).map((_, i) => (
           <div
-            key={i}
-            className="absolute w-3 h-3 bg-gradient-to-r from-red-500 to-purple-500 rounded-full animate-float opacity-40"
+            key={`shape-${i}`}
+            className={`absolute rounded-full opacity-20 ${
+              i % 3 === 0 ? 'bg-red-500/30' :
+              i % 3 === 1 ? 'bg-blue-500/30' : 'bg-purple-500/30'
+            }`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.8}s`,
-              animationDuration: `${4 + Math.random() * 2}s`,
+              width: `${20 + Math.random() * 40}px`,
+              height: `${20 + Math.random() * 40}px`,
+              animationDelay: `${i * 0.5}s`,
+              animation: `float ${4 + Math.random() * 3}s ease-in-out infinite`,
             }}
           />
         ))}
+
+        {/* Subtle grid pattern */}
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+
+        {/* Animated light beams */}
+        <div className="absolute inset-0 overflow-hidden">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={`beam-${i}`}
+              className="absolute w-full h-px bg-gradient-to-r from-transparent via-red-500/40 to-transparent"
+              style={{
+                top: `${25 + i * 25}%`,
+                animationDelay: `${i * 1.5}s`,
+                animation: `pulse 4s ease-in-out infinite`,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Instructions */}
