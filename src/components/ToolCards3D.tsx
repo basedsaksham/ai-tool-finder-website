@@ -171,9 +171,6 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
             perspectiveOrigin: 'center center',
           }}
         >
-          {/* Central pivot point */}
-          <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-red-500/50 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-40" />
-
           {/* Rotating cards container */}
           <div
             className="absolute inset-0 transition-transform duration-300 ease-out"
