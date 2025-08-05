@@ -307,9 +307,9 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
                 </div>
 
                 {/* Tool Name */}
-                <h3 className={`font-bold text-sm mb-1 transition-all duration-300 ${
+                <h3 className={`font-bold text-base mb-1 transition-all duration-300 ${
                   highlightedTool === index
-                    ? 'text-red-300 text-base'
+                    ? 'text-red-300 text-lg'
                     : 'text-white'
                 }`}>
                   {tool.name}
@@ -317,30 +317,30 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
 
                 {/* Category */}
                 <p className={`text-xs mb-2 transition-colors duration-300 ${
-                  highlightedTool === index ? 'text-red-200' : 'text-white/60'
+                  highlightedTool === index ? 'text-red-200' : 'text-white/70'
                 }`}>
                   {tool.category}
                 </p>
 
                 {/* Pricing Badge */}
-                <div className={`px-2 py-1 rounded text-xs font-medium transition-all duration-300 ${
+                <div className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-300 ${
                   tool.pricing.type === 'free'
-                    ? 'bg-green-500/40 text-green-200 border border-green-400/30' :
+                    ? 'bg-green-500 text-white shadow-lg shadow-green-500/30' :
                   tool.pricing.type === 'freemium'
-                    ? 'bg-blue-500/40 text-blue-200 border border-blue-400/30' :
-                    'bg-orange-500/40 text-orange-200 border border-orange-400/30'
-                } ${highlightedTool === index ? 'scale-110 shadow-lg' : ''}`}>
+                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' :
+                    'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
+                } ${highlightedTool === index ? 'scale-110 animate-pulse' : ''}`}>
                   {tool.pricing.type === 'free' ? 'FREE' :
                    tool.pricing.type === 'freemium' ? 'FREEMIUM' :
                    `$${tool.pricing.startingPrice}/mo`}
                 </div>
 
                 {/* Rating */}
-                <div className={`flex items-center gap-1 mt-1 text-xs transition-all duration-300 ${
+                <div className={`flex items-center gap-1 mt-2 text-sm transition-all duration-300 ${
                   highlightedTool === index ? 'text-yellow-300 scale-110' : 'text-yellow-400'
                 }`}>
-                  <span>★</span>
-                  <span className="text-white/80">{tool.rating}</span>
+                  <span className="text-yellow-400">★</span>
+                  <span className="text-white font-semibold">{tool.rating}</span>
                 </div>
 
                 {/* Highlight overlay */}
