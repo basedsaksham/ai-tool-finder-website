@@ -66,6 +66,7 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-secondary': 'var(--gradient-secondary)',
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			},
 			boxShadow: {
 				'glow': 'var(--glow-primary)',
