@@ -204,8 +204,8 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         <pointLight position={[10, 10, 10]} intensity={0.8} color="#ffffff" />
         <pointLight position={[-10, -10, -10]} intensity={0.4} color="#E50914" />
         
-        <StableCamera />
-        
+        <StableCamera onCameraUpdate={setCameraPos} />
+
         {/* Tool cards */}
         {visibleTools.map((tool, index) => (
           <ToolCard3D
