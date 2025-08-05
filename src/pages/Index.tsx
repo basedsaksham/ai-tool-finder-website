@@ -1,12 +1,13 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import ThreeBackground from "@/components/ThreeBackground";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Sparkles, 
-  Target, 
-  Zap, 
+import {
+  Sparkles,
+  Target,
+  Zap,
   ArrowRight,
   FileText,
   Image,
