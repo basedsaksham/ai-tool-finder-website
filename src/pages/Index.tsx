@@ -94,7 +94,7 @@ const Index = () => {
             {featuredCategories.map((category) => {
               const Icon = category.icon;
               return (
-                <Card key={category.name} className="group hover:shadow-card transition-all duration-300 hover:-translate-y-1 border-border">
+                <Card key={category.name} className="group hover:shadow-card transition-all duration-300 hover:-translate-y-1 border-border bg-background/60 backdrop-blur-sm hover:bg-background/80">
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
