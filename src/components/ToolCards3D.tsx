@@ -292,8 +292,24 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         </div>
       </div>
 
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+      {/* Atmospheric overlays */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Radial gradient from center */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/30" />
+
+        {/* Subtle vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
+
+        {/* Dynamic light effect that follows mouse */}
+        <div
+          className="absolute w-96 h-96 rounded-full bg-red-500/5 blur-3xl transition-all duration-700"
+          style={{
+            left: `${50 + mousePosition.x * 10}%`,
+            top: `${50 + mousePosition.y * 10}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      </div>
     </div>
   );
 };
