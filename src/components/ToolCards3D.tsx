@@ -365,22 +365,30 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           return (
             <div
               key={`overlay-${tool.id}`}
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
-                highlightedTool === index ? 'z-20' : 'z-10'
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
+                highlightedTool === index ? 'z-30' : isFrontFacing ? 'z-20' : 'z-10'
               }`}
               style={{
-                left: `${screenX}%`,
-                top: `${screenY}%`,
+                left: `${Math.max(5, Math.min(95, screenX))}%`,
+                top: `${Math.max(5, Math.min(95, screenY))}%`,
                 transform: `translate(-50%, -50%) scale(${scale})`,
-                opacity: opacity,
+                opacity: finalOpacity,
+                pointerEvents: isFrontFacing ? 'auto' : 'none',
               }}
             >
               {/* Tool Card Content */}
-              <div className={`text-center p-3 rounded-lg backdrop-blur-sm border transition-all duration-300 ${
-                highlightedTool === index
-                  ? 'bg-red-500/30 border-red-500/60 shadow-lg shadow-red-500/20 scale-110'
-                  : 'bg-black/40 border-white/20'
-              }`}>
+              <div
+                className={`text-center p-2 rounded-lg backdrop-blur-sm border transition-all duration-300 cursor-pointer ${
+                  highlightedTool === index
+                    ? 'bg-red-500/40 border-red-500/80 shadow-xl shadow-red-500/30 scale-105'
+                    : isFrontFacing
+                      ? 'bg-black/50 border-white/30 hover:bg-black/70 hover:border-white/50'
+                      : 'bg-black/30 border-white/20'
+                }`}
+                onClick={() => isFrontFacing && onToolClick?.(tool)}
+                onMouseEnter={() => isFrontFacing && setHighlightedTool(index)}
+                onMouseLeave={() => setHighlightedTool(null)}
+              >
                 {/* Logo/Icon */}
                 <div className="text-2xl mb-2">
                   {getToolIcon(tool.name)}
