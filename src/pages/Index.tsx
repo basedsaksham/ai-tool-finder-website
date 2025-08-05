@@ -15,6 +15,7 @@ import {
   Briefcase,
   Star
 } from "lucide-react";
+import FeaturedTools3D from "@/components/FeaturedTools3D";
 
 const Index = () => {
   const featuredCategories = [
@@ -66,16 +67,20 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
+      <FeaturedTools3D />
       
       {/* Categories Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Explore AI Tools by Category
+            <h2 className="text-4xl md:text-5xl font-black mb-6 text-foreground">
+              Browse by
+              <span className="bg-gradient-primary bg-clip-text text-transparent ml-4">
+                Category
+              </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Discover the perfect AI solution for your specific needs across various categories
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              From image generation to code assistance — find exactly what you need across our curated categories
             </p>
           </div>
 
@@ -129,11 +134,14 @@ const Index = () => {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Trending AI Tools This Week
+            <h2 className="text-4xl md:text-5xl font-black mb-6 text-foreground">
+              This Week's
+              <span className="bg-gradient-primary bg-clip-text text-transparent ml-4">
+                Top Picks
+              </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              The most popular and talked-about AI tools right now
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              The most popular and trending AI tools, handpicked by our community
             </p>
           </div>
 

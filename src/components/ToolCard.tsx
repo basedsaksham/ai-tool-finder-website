@@ -27,7 +27,12 @@ const ToolCard = ({ tool, onCompare, isComparing }: ToolCardProps) => {
   };
 
   return (
-    <Card className="group relative overflow-hidden border-border bg-card hover:shadow-card transition-all duration-300 hover:-translate-y-1">
+    <Card className="group relative overflow-hidden border-border bg-card hover:shadow-glow transition-all duration-300 hover:-translate-y-2 hover:scale-105"
+      style={{
+        background: 'linear-gradient(145deg, hsl(var(--card)), hsl(var(--card)/0.95))',
+        backdropFilter: 'blur(8px)'
+      }}
+    >
       {/* Trending/Popular indicators */}
       <div className="absolute top-3 right-3 flex gap-1">
         {tool.isTrending && (
