@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { AITool } from '@/types/tool';
 
 interface ToolCards3DProps {
@@ -9,6 +9,9 @@ interface ToolCards3DProps {
 const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
   const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [rotationAngle, setRotationAngle] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Get tool logo component
   const getToolLogo = (toolName: string) => {
