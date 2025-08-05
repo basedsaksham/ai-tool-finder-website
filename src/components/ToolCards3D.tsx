@@ -1,8 +1,18 @@
 import { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Box, OrbitControls } from '@react-three/drei';
-import { Mesh } from 'three';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Mesh, BoxGeometry, MeshStandardMaterial } from 'three';
 import { AITool } from '@/types/tool';
+
+interface CameraControlsProps {}
+
+function CameraControls({}: CameraControlsProps) {
+  useFrame((state) => {
+    state.camera.position.x = Math.cos(state.clock.elapsedTime * 0.2) * 8;
+    state.camera.position.z = Math.sin(state.clock.elapsedTime * 0.2) * 8;
+    state.camera.lookAt(0, 0, 0);
+  });
+  return null;
+}
 
 interface ToolCard3DProps {
   tool: AITool;
@@ -12,6 +22,7 @@ interface ToolCard3DProps {
 
 function ToolCard3D({ tool, position, onClick }: ToolCard3DProps) {
   const meshRef = useRef<Mesh>(null);
+  const pricingRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
   useFrame((state, delta) => {
@@ -36,19 +47,20 @@ function ToolCard3D({ tool, position, onClick }: ToolCard3DProps) {
 
   return (
     <group position={position}>
-      <Box
+      <mesh
         ref={meshRef}
-        args={[2, 2.5, 0.2]}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
         onClick={onClick}
       >
+        <boxGeometry args={[2, 2.5, 0.2]} />
         <meshStandardMaterial color={hovered ? '#E50914' : '#1a1a1a'} />
-      </Box>
+      </mesh>
 
-      <Box args={[1.6, 0.3, 0.05]} position={[0, -0.8, 0.11]}>
+      <mesh ref={pricingRef} position={[0, -0.8, 0.11]}>
+        <boxGeometry args={[1.6, 0.3, 0.05]} />
         <meshStandardMaterial color={getPricingColor()} />
-      </Box>
+      </mesh>
     </group>
   );
 }
