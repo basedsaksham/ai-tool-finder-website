@@ -324,6 +324,81 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         })}
       </Canvas>
 
+      {/* 3D Card Text Overlays */}
+      <div className="absolute inset-0 pointer-events-none">
+        {visibleTools.map((tool, index) => {
+          const angle = (index / visibleTools.length) * Math.PI * 2;
+          const radius = 4.5;
+          const x = Math.cos(angle) * radius;
+          const z = Math.sin(angle) * radius;
+          const y = Math.sin(index * 0.5) * 0.5;
+
+          // Convert 3D position to 2D screen position (simplified)
+          const screenX = 50 + (x / 8) * 30; // Center at 50% + offset
+          const screenY = 50 - (y / 4) * 20; // Center at 50% + offset
+          const screenZ = z; // Use for depth-based scaling
+
+          const scale = Math.max(0.6, 1 - Math.abs(screenZ) / 10);
+          const opacity = Math.max(0.4, 1 - Math.abs(screenZ) / 8);
+
+          return (
+            <div
+              key={`overlay-${tool.id}`}
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
+                highlightedTool === index ? 'z-20' : 'z-10'
+              }`}
+              style={{
+                left: `${screenX}%`,
+                top: `${screenY}%`,
+                transform: `translate(-50%, -50%) scale(${scale})`,
+                opacity: opacity,
+              }}
+            >
+              {/* Tool Card Content */}
+              <div className={`text-center p-3 rounded-lg backdrop-blur-sm border transition-all duration-300 ${
+                highlightedTool === index
+                  ? 'bg-red-500/30 border-red-500/60 shadow-lg shadow-red-500/20 scale-110'
+                  : 'bg-black/40 border-white/20'
+              }`}>
+                {/* Logo/Icon */}
+                <div className="text-2xl mb-2">
+                  {getToolIcon(tool.name)}
+                </div>
+
+                {/* Tool Name */}
+                <h3 className={`font-semibold text-sm mb-1 transition-colors duration-300 ${
+                  highlightedTool === index ? 'text-white' : 'text-white/90'
+                }`}>
+                  {tool.name}
+                </h3>
+
+                {/* Category */}
+                <p className="text-xs text-white/60 mb-2">
+                  {tool.category}
+                </p>
+
+                {/* Pricing Badge */}
+                <div className={`inline-block px-2 py-1 rounded text-xs font-medium transition-all duration-300 ${
+                  tool.pricing.type === 'free' ? 'bg-green-500/30 text-green-300' :
+                  tool.pricing.type === 'freemium' ? 'bg-blue-500/30 text-blue-300' :
+                  'bg-orange-500/30 text-orange-300'
+                }`}>
+                  {tool.pricing.type === 'free' ? 'FREE' :
+                   tool.pricing.type === 'freemium' ? 'FREEMIUM' :
+                   `$${tool.pricing.startingPrice}/mo`}
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center justify-center gap-1 mt-2 text-xs">
+                  <span className="text-yellow-400">★</span>
+                  <span className="text-white/80">{tool.rating}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       {/* Enhanced overlay with synchronized highlighting */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Top gradient overlay */}
