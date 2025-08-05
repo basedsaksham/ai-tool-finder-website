@@ -77,24 +77,28 @@ function ParticleBackground() {
   );
 }
 
-// Interactive mouse-controlled camera
-function InteractiveCamera() {
+// Interactive mouse-controlled camera with position tracking
+function InteractiveCamera({ onCameraUpdate }: { onCameraUpdate?: (position: Vector3, rotation: any) => void }) {
   const { camera, mouse, viewport } = useThree();
   const [targetPosition] = useState(new Vector3(0, 0, 8));
   const [currentPosition] = useState(new Vector3(0, 0, 8));
-  
+
   useFrame((state) => {
     // Smooth mouse-based camera movement
-    const mouseInfluence = 2;
-    targetPosition.x = (mouse.x * viewport.width * mouseInfluence) / 4;
-    targetPosition.y = (mouse.y * viewport.height * mouseInfluence) / 4;
-    
+    const mouseInfluence = 1.5;
+    targetPosition.x = (mouse.x * viewport.width * mouseInfluence) / 6;
+    targetPosition.y = (mouse.y * viewport.height * mouseInfluence) / 6;
+    targetPosition.z = 8 + Math.sin(state.clock.elapsedTime * 0.1) * 0.5; // Subtle breathing effect
+
     // Smooth interpolation
-    currentPosition.lerp(targetPosition, 0.05);
+    currentPosition.lerp(targetPosition, 0.08);
     camera.position.copy(currentPosition);
     camera.lookAt(0, 0, 0);
+
+    // Notify parent component of camera changes
+    onCameraUpdate?.(currentPosition, camera.rotation);
   });
-  
+
   return null;
 }
 
