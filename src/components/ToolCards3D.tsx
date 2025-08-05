@@ -13,6 +13,33 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const [rotationAngle, setRotationAngle] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Mouse tracking for rotation control
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const x = (e.clientX - centerX) / (rect.width / 2);
+        const y = (e.clientY - centerY) / (rect.height / 2);
+
+        setMousePosition({ x, y });
+
+        // Calculate rotation based on mouse X position
+        const maxRotation = 45; // degrees
+        const rotation = x * maxRotation;
+        setRotationAngle(rotation);
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('mousemove', handleMouseMove);
+      return () => container.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, []);
+
   // Get tool logo component
   const getToolLogo = (toolName: string) => {
     const logoComponents: { [key: string]: JSX.Element } = {
