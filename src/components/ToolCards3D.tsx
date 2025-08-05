@@ -310,7 +310,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         <pointLight position={[5, -5, 5]} intensity={0.3} color="#22c55e" />
 
         {/* Interactive camera */}
-        <InteractiveCamera />
+        <InteractiveCamera onCameraUpdate={handleCameraUpdate} />
 
         {/* Tool cards in a dynamic arrangement */}
         {visibleTools.map((tool, index) => {
