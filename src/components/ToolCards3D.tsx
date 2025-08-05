@@ -76,7 +76,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   return (
     <div className="h-96 w-full relative">
       <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+        <CameraControls />
         <ambientLight intensity={0.6} />
         <pointLight position={[10, 10, 10]} intensity={0.8} />
         <pointLight position={[-10, -10, -10]} color="#E50914" intensity={0.4} />
