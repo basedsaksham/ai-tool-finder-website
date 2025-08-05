@@ -54,20 +54,24 @@ function ParticleBackground() {
   );
 }
 
-// Stable camera controls
-function StableCamera() {
+// Stable camera controls with position tracking
+function StableCamera({ onCameraUpdate }: { onCameraUpdate?: (position: Vector3) => void }) {
   const { camera, mouse } = useThree();
-  
+
   useFrame((state) => {
     // Gentle, predictable camera movement
-    const targetX = mouse.x * 2;
-    const targetY = mouse.y * 1;
-    
-    camera.position.x += (targetX - camera.position.x) * 0.02;
-    camera.position.y += (targetY - camera.position.y) * 0.02;
+    const targetX = mouse.x * 1.5;
+    const targetY = mouse.y * 0.8;
+
+    camera.position.x += (targetX - camera.position.x) * 0.03;
+    camera.position.y += (targetY - camera.position.y) * 0.03;
+    camera.position.z = 8; // Keep camera at fixed distance
     camera.lookAt(0, 0, 0);
+
+    // Update parent with camera position
+    onCameraUpdate?.(camera.position);
   });
-  
+
   return null;
 }
 
