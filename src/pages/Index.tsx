@@ -65,13 +65,18 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <Hero />
-      <FeaturedTools3D />
+    <div className="min-h-screen bg-background relative">
+      {/* Global background */}
+      <ThreeBackground />
+
+      {/* Main content */}
+      <div className="relative z-10">
+        <Header />
+        <Hero />
+        <FeaturedTools3D />
       
       {/* Categories Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black mb-6 text-foreground">
@@ -132,7 +137,7 @@ const Index = () => {
       </section>
 
       {/* Top Tools Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-muted/20 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black mb-6 text-foreground">
@@ -194,7 +199,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -218,6 +223,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };
