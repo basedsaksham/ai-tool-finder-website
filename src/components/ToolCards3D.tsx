@@ -3,57 +3,34 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Mesh, Vector3, Color, BufferGeometry, BufferAttribute, Points as ThreePoints } from 'three';
 import { AITool } from '@/types/tool';
 
-// Animated particle background
+// Simplified particle background
 function ParticleBackground() {
   const pointsRef = useRef<ThreePoints>(null);
-  const particleCount = 1500;
+  const particleCount = 800;
   
-  const { positions, colors, scales } = useMemo(() => {
+  const { positions, colors } = useMemo(() => {
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
-    const scales = new Float32Array(particleCount);
     
     for (let i = 0; i < particleCount; i++) {
-      // Create a more dynamic distribution
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 30;
-      positions[i3 + 1] = (Math.random() - 0.5) * 30;
-      positions[i3 + 2] = (Math.random() - 0.5) * 30;
+      positions[i3] = (Math.random() - 0.5) * 25;
+      positions[i3 + 1] = (Math.random() - 0.5) * 25;
+      positions[i3 + 2] = (Math.random() - 0.5) * 25;
       
-      // Netflix-inspired color palette
-      const colorChoice = Math.random();
-      if (colorChoice < 0.6) {
-        colors[i3] = 1; // Red
-        colors[i3 + 1] = 0.1 + Math.random() * 0.2;
-        colors[i3 + 2] = 0.1 + Math.random() * 0.2;
-      } else if (colorChoice < 0.8) {
-        colors[i3] = 0.2 + Math.random() * 0.3; // Blue tint
-        colors[i3 + 1] = 0.4 + Math.random() * 0.3;
-        colors[i3 + 2] = 1;
-      } else {
-        colors[i3] = 1; // White
-        colors[i3 + 1] = 1;
-        colors[i3 + 2] = 1;
-      }
-      
-      scales[i] = Math.random() * 0.5 + 0.5;
+      // Simplified color scheme
+      colors[i3] = 1; // Red
+      colors[i3 + 1] = 0.2 + Math.random() * 0.3;
+      colors[i3 + 2] = 0.2 + Math.random() * 0.3;
     }
     
-    return { positions, colors, scales };
+    return { positions, colors };
   }, []);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (pointsRef.current) {
       pointsRef.current.rotation.x += 0.001;
       pointsRef.current.rotation.y += 0.002;
-      
-      // Animate particle movement
-      const positions = pointsRef.current.geometry.attributes.position.array as Float32Array;
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        positions[i3 + 1] += Math.sin(state.clock.elapsedTime + i * 0.01) * 0.01;
-      }
-      pointsRef.current.geometry.attributes.position.needsUpdate = true;
     }
   });
 
@@ -67,91 +44,31 @@ function ParticleBackground() {
   return (
     <points ref={pointsRef} geometry={geometry}>
       <pointsMaterial
-        size={0.02}
+        size={0.015}
         vertexColors
         transparent
-        opacity={0.6}
+        opacity={0.4}
         sizeAttenuation
       />
     </points>
   );
 }
 
-// Interactive mouse-controlled camera with position tracking
-function InteractiveCamera({ onCameraUpdate }: { onCameraUpdate?: (position: Vector3, rotation: any) => void }) {
-  const { camera, mouse, viewport } = useThree();
-  const [targetPosition] = useState(new Vector3(0, 0, 8));
-  const [currentPosition] = useState(new Vector3(0, 0, 8));
-
-  useFrame((state) => {
-    // Smooth mouse-based camera movement
-    const mouseInfluence = 1.5;
-    targetPosition.x = (mouse.x * viewport.width * mouseInfluence) / 6;
-    targetPosition.y = (mouse.y * viewport.height * mouseInfluence) / 6;
-    targetPosition.z = 8 + Math.sin(state.clock.elapsedTime * 0.1) * 0.5; // Subtle breathing effect
-
-    // Smooth interpolation
-    currentPosition.lerp(targetPosition, 0.08);
-    camera.position.copy(currentPosition);
-    camera.lookAt(0, 0, 0);
-
-    // Notify parent component of camera changes
-    onCameraUpdate?.(currentPosition, camera.rotation);
-  });
-
-  return null;
-}
-
-// Enhanced floating shapes in background
-function FloatingShapes() {
-  const shapesRef = useRef<Mesh[]>([]);
-  const shapeCount = 20;
+// Stable camera controls
+function StableCamera() {
+  const { camera, mouse } = useThree();
   
-  const shapes = useMemo(() => {
-    return Array.from({ length: shapeCount }, (_, i) => ({
-      position: [
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20 - 5
-      ] as [number, number, number],
-      scale: Math.random() * 0.5 + 0.3,
-      speed: Math.random() * 0.02 + 0.01,
-      color: Math.random() > 0.5 ? '#E50914' : '#3b82f6'
-    }));
-  }, []);
-
   useFrame((state) => {
-    shapesRef.current.forEach((mesh, i) => {
-      if (mesh) {
-        mesh.rotation.x += shapes[i].speed;
-        mesh.rotation.y += shapes[i].speed * 0.7;
-        mesh.position.y += Math.sin(state.clock.elapsedTime + i) * 0.01;
-      }
-    });
+    // Gentle, predictable camera movement
+    const targetX = mouse.x * 2;
+    const targetY = mouse.y * 1;
+    
+    camera.position.x += (targetX - camera.position.x) * 0.02;
+    camera.position.y += (targetY - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
   });
-
-  return (
-    <group>
-      {shapes.map((shape, i) => (
-        <mesh
-          key={i}
-          ref={(el) => {
-            if (el) shapesRef.current[i] = el;
-          }}
-          position={shape.position}
-          scale={shape.scale}
-        >
-          <boxGeometry args={[0.5, 0.5, 0.5]} />
-          <meshStandardMaterial
-            color={shape.color}
-            transparent
-            opacity={0.1}
-            wireframe
-          />
-        </mesh>
-      ))}
-    </group>
-  );
+  
+  return null;
 }
 
 interface ToolCard3DProps {
@@ -164,27 +81,19 @@ interface ToolCard3DProps {
 
 function ToolCard3D({ tool, position, onClick, index, isHighlighted }: ToolCard3DProps) {
   const meshRef = useRef<Mesh>(null);
-  const pricingRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
-  const [clicked, setClicked] = useState(false);
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      // Individual rotation with slight variation
-      meshRef.current.rotation.y += delta * (0.3 + index * 0.1);
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime + index) * 0.1;
-
-      // Dynamic scaling with highlight effect
-      const baseScale = isHighlighted ? 1.15 : 1;
-      const scale = hovered ? baseScale * 1.1 : clicked ? baseScale * 0.9 : baseScale;
-      meshRef.current.scale.lerp(new Vector3(scale, scale, scale), 0.1);
-
-      // Floating animation
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime + index * 0.5) * 0.2;
-    }
-
-    if (pricingRef.current) {
-      pricingRef.current.rotation.y = meshRef.current?.rotation.y || 0;
+      // Simple, stable rotation
+      meshRef.current.rotation.y += delta * 0.2;
+      
+      // Gentle floating animation
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime + index * 2) * 0.1;
+      
+      // Simple scaling for highlights
+      const targetScale = (hovered || isHighlighted) ? 1.1 : 1;
+      meshRef.current.scale.lerp(new Vector3(targetScale, targetScale, targetScale), 0.1);
     }
   });
 
@@ -197,12 +106,6 @@ function ToolCard3D({ tool, position, onClick, index, isHighlighted }: ToolCard3
     }
   };
 
-  const handleClick = () => {
-    setClicked(true);
-    setTimeout(() => setClicked(false), 200);
-    onClick?.();
-  };
-
   return (
     <group position={position}>
       {/* Main card */}
@@ -210,49 +113,39 @@ function ToolCard3D({ tool, position, onClick, index, isHighlighted }: ToolCard3
         ref={meshRef}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
-        onClick={handleClick}
+        onClick={onClick}
       >
-        <boxGeometry args={[2, 2.5, 0.3]} />
+        <boxGeometry args={[2.2, 2.8, 0.3]} />
         <meshStandardMaterial
           color={hovered || isHighlighted ? '#E50914' : '#1a1a1a'}
-          metalness={0.3}
-          roughness={0.4}
+          metalness={0.2}
+          roughness={0.3}
         />
       </mesh>
-
+      
       {/* Pricing indicator */}
-      <mesh ref={pricingRef} position={[0, -0.8, 0.16]}>
-        <boxGeometry args={[1.8, 0.4, 0.1]} />
+      <mesh position={[0, -1, 0.16]}>
+        <boxGeometry args={[2, 0.4, 0.1]} />
         <meshStandardMaterial
           color={getPricingColor()}
           emissive={getPricingColor()}
-          emissiveIntensity={hovered || isHighlighted ? 0.4 : 0.1}
+          emissiveIntensity={(hovered || isHighlighted) ? 0.3 : 0.1}
         />
       </mesh>
-
-      {/* Enhanced glow effect */}
+      
+      {/* Glow effect */}
       {(hovered || isHighlighted) && (
         <mesh position={[0, 0, -0.1]}>
-          <boxGeometry args={[2.2, 2.7, 0.1]} />
+          <boxGeometry args={[2.4, 3, 0.1]} />
           <meshStandardMaterial
             color="#E50914"
             transparent
-            opacity={isHighlighted ? 0.5 : 0.3}
+            opacity={0.3}
             emissive="#E50914"
-            emissiveIntensity={isHighlighted ? 0.7 : 0.5}
+            emissiveIntensity={0.5}
           />
         </mesh>
       )}
-
-      {/* Tool category indicator */}
-      <mesh position={[0, 0.8, 0.16]}>
-        <boxGeometry args={[1.6, 0.2, 0.05]} />
-        <meshStandardMaterial
-          color="#ffffff"
-          emissive="#ffffff"
-          emissiveIntensity={hovered ? 0.2 : 0.05}
-        />
-      </mesh>
     </group>
   );
 }
@@ -264,16 +157,22 @@ interface ToolCards3DProps {
 
 const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
-  const [isDragging, setIsDragging] = useState(false);
   const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
-  const [cameraPosition, setCameraPosition] = useState(new Vector3(0, 0, 8));
-  const canvasRef = useRef<HTMLDivElement>(null);
 
-  const handleCameraUpdate = (position: Vector3, rotation: any) => {
-    setCameraPosition(position.clone());
-  };
+  // Fixed card positions in a circle
+  const cardPositions = useMemo(() => {
+    return visibleTools.map((_, index) => {
+      const angle = (index / visibleTools.length) * Math.PI * 2;
+      const radius = 4;
+      return [
+        Math.cos(angle) * radius,
+        0,
+        Math.sin(angle) * radius
+      ] as [number, number, number];
+    });
+  }, [visibleTools.length]);
 
-  // Function to get tool icon/logo
+  // Get tool icon
   const getToolIcon = (toolName: string) => {
     const iconMap: { [key: string]: string } = {
       'ChatGPT': '🤖',
@@ -287,136 +186,98 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   };
 
   return (
-    <div
-      ref={canvasRef}
-      className="h-96 w-full relative overflow-hidden rounded-xl"
-      onMouseDown={() => setIsDragging(true)}
-      onMouseUp={() => setIsDragging(false)}
-      onMouseLeave={() => setIsDragging(false)}
-    >
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 60 }}
+    <div className="h-96 w-full relative overflow-hidden rounded-xl">
+      {/* 3D Canvas */}
+      <Canvas 
+        camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a1a1a 100%)' }}
       >
-        {/* Background elements */}
         <ParticleBackground />
-        <FloatingShapes />
-
-        {/* Lighting setup */}
-        <ambientLight intensity={0.4} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#ffffff" />
-        <pointLight position={[-10, -10, -10]} intensity={0.6} color="#E50914" />
-        <pointLight position={[0, 10, -10]} intensity={0.4} color="#3b82f6" />
-        <pointLight position={[5, -5, 5]} intensity={0.3} color="#22c55e" />
-
-        {/* Interactive camera */}
-        <InteractiveCamera onCameraUpdate={handleCameraUpdate} />
-
-        {/* Tool cards in a dynamic arrangement */}
-        {visibleTools.map((tool, index) => {
-          const angle = (index / visibleTools.length) * Math.PI * 2;
-          const radius = 4.5;
-          const x = Math.cos(angle) * radius;
-          const z = Math.sin(angle) * radius;
-          const y = Math.sin(index * 0.5) * 0.5; // Varied heights
-
-          return (
-            <ToolCard3D
-              key={tool.id}
-              tool={tool}
-              position={[x, y, z]}
-              onClick={() => onToolClick?.(tool)}
-              index={index}
-              isHighlighted={highlightedTool === index}
-            />
-          );
-        })}
+        
+        {/* Stable lighting */}
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={0.8} color="#ffffff" />
+        <pointLight position={[-10, -10, -10]} intensity={0.4} color="#E50914" />
+        
+        <StableCamera />
+        
+        {/* Tool cards */}
+        {visibleTools.map((tool, index) => (
+          <ToolCard3D
+            key={tool.id}
+            tool={tool}
+            position={cardPositions[index]}
+            onClick={() => onToolClick?.(tool)}
+            index={index}
+            isHighlighted={highlightedTool === index}
+          />
+        ))}
       </Canvas>
-
-      {/* 3D Card Text Overlays */}
+      
+      {/* Fixed position overlays */}
       <div className="absolute inset-0 pointer-events-none">
+        {/* Instructions */}
+        <div className="absolute top-4 left-4 text-white/80">
+          <p className="text-sm font-medium">🖱️ Move mouse to explore</p>
+        </div>
+        
+        {/* Tool information cards - Fixed positions */}
         {visibleTools.map((tool, index) => {
-          const angle = (index / visibleTools.length) * Math.PI * 2;
-          const radius = 4.5;
-          const x = Math.cos(angle) * radius;
-          const z = Math.sin(angle) * radius;
-          const y = Math.sin(index * 0.5) * 0.5;
-
-          // More accurate 3D to 2D projection considering camera position
-          const relativeX = x - cameraPosition.x;
-          const relativeZ = z - cameraPosition.z;
-          const relativeY = y - cameraPosition.y;
-
-          // Project to screen space
-          const fov = 60 * (Math.PI / 180); // Convert to radians
-          const distance = Math.sqrt(relativeX * relativeX + relativeZ * relativeZ);
-          const depth = Math.abs(relativeZ);
-
-          const screenX = 50 + (relativeX / (depth + 8)) * 200; // More responsive projection
-          const screenY = 50 - (relativeY / (depth + 8)) * 150;
-
-          const scale = Math.max(0.5, Math.min(1.2, 8 / (depth + 4)));
-          const opacity = Math.max(0.3, Math.min(1, 8 / (depth + 2)));
-
-          // Enhanced visibility for front-facing cards
-          const isFrontFacing = relativeZ > -2;
-          const finalOpacity = isFrontFacing ? opacity : opacity * 0.5;
-
+          // Simple fixed positioning based on index
+          const cols = 3;
+          const rows = 2;
+          const col = index % cols;
+          const row = Math.floor(index / cols);
+          
+          const x = 20 + (col * 60 / cols);
+          const y = 20 + (row * 60 / rows);
+          
           return (
             <div
-              key={`overlay-${tool.id}`}
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
-                highlightedTool === index ? 'z-30' : isFrontFacing ? 'z-20' : 'z-10'
+              key={`info-${tool.id}`}
+              className={`absolute pointer-events-auto transition-all duration-300 ${
+                highlightedTool === index ? 'scale-110 z-20' : 'z-10'
               }`}
               style={{
-                left: `${Math.max(5, Math.min(95, screenX))}%`,
-                top: `${Math.max(5, Math.min(95, screenY))}%`,
-                transform: `translate(-50%, -50%) scale(${scale})`,
-                opacity: finalOpacity,
-                pointerEvents: isFrontFacing ? 'auto' : 'none',
+                left: `${x}%`,
+                top: `${y}%`,
+                transform: 'translate(-50%, -50%)',
               }}
+              onMouseEnter={() => setHighlightedTool(index)}
+              onMouseLeave={() => setHighlightedTool(null)}
+              onClick={() => onToolClick?.(tool)}
             >
-              {/* Tool Card Content */}
-              <div
-                className={`text-center p-2 rounded-lg backdrop-blur-sm border transition-all duration-300 cursor-pointer ${
-                  highlightedTool === index
-                    ? 'bg-red-500/40 border-red-500/80 shadow-xl shadow-red-500/30 scale-105'
-                    : isFrontFacing
-                      ? 'bg-black/50 border-white/30 hover:bg-black/70 hover:border-white/50'
-                      : 'bg-black/30 border-white/20'
-                }`}
-                onClick={() => isFrontFacing && onToolClick?.(tool)}
-                onMouseEnter={() => isFrontFacing && setHighlightedTool(index)}
-                onMouseLeave={() => setHighlightedTool(null)}
-              >
-                {/* Logo/Icon */}
-                <div className="text-2xl mb-2">
+              <div className={`p-3 rounded-lg backdrop-blur-sm border cursor-pointer transition-all duration-300 ${
+                highlightedTool === index 
+                  ? 'bg-red-500/40 border-red-500/80 shadow-xl shadow-red-500/30' 
+                  : 'bg-black/60 border-white/30 hover:bg-black/80'
+              }`}>
+                {/* Tool icon */}
+                <div className="text-center text-2xl mb-2">
                   {getToolIcon(tool.name)}
                 </div>
-
-                {/* Tool Name */}
-                <h3 className={`font-semibold text-sm mb-1 transition-colors duration-300 ${
-                  highlightedTool === index ? 'text-white' : 'text-white/90'
-                }`}>
+                
+                {/* Tool name */}
+                <h3 className="text-white font-semibold text-sm text-center mb-1">
                   {tool.name}
                 </h3>
-
+                
                 {/* Category */}
-                <p className="text-xs text-white/60 mb-2">
+                <p className="text-white/60 text-xs text-center mb-2">
                   {tool.category}
                 </p>
-
-                {/* Pricing Badge */}
-                <div className={`inline-block px-2 py-1 rounded text-xs font-medium transition-all duration-300 ${
+                
+                {/* Pricing */}
+                <div className={`text-center text-xs px-2 py-1 rounded ${
                   tool.pricing.type === 'free' ? 'bg-green-500/30 text-green-300' :
                   tool.pricing.type === 'freemium' ? 'bg-blue-500/30 text-blue-300' :
                   'bg-orange-500/30 text-orange-300'
                 }`}>
-                  {tool.pricing.type === 'free' ? 'FREE' :
+                  {tool.pricing.type === 'free' ? 'FREE' : 
                    tool.pricing.type === 'freemium' ? 'FREEMIUM' :
                    `$${tool.pricing.startingPrice}/mo`}
                 </div>
-
+                
                 {/* Rating */}
                 <div className="flex items-center justify-center gap-1 mt-2 text-xs">
                   <span className="text-yellow-400">★</span>
@@ -426,78 +287,26 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
             </div>
           );
         })}
-      </div>
-
-      {/* Enhanced overlay with synchronized highlighting */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Top gradient overlay */}
-        <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/20 to-transparent" />
-
-        {/* Interactive instructions */}
-        <div className="absolute top-4 left-4 text-white/80">
-          <p className="text-sm font-medium">
-            {isDragging ? '🎯 Exploring...' : '🖱️ Move mouse to explore'}
-          </p>
-        </div>
-
-        {/* Tool details overlay */}
-        <div className="absolute top-4 right-4 text-right text-white/80">
-          {highlightedTool !== null && (
-            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10">
-              <h3 className="font-semibold text-white">{visibleTools[highlightedTool].name}</h3>
-              <p className="text-sm text-white/60">{visibleTools[highlightedTool].category}</p>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-xs px-2 py-1 rounded bg-white/20">
-                  {visibleTools[highlightedTool].pricing.type}
-                </span>
-                <span className="text-xs text-yellow-400">★ {visibleTools[highlightedTool].rating}</span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Tool names with synchronized highlighting */}
+        
+        {/* Bottom tool list for reference */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-          <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
+          <div className="flex gap-2 flex-wrap justify-center max-w-lg">
             {visibleTools.map((tool, index) => (
-              <div
-                key={tool.id}
-                className={`group relative transition-all duration-300 cursor-pointer pointer-events-auto ${
-                  highlightedTool === index ? 'scale-110' : ''
+              <span
+                key={`ref-${tool.id}`}
+                className={`text-xs px-2 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+                  highlightedTool === index
+                    ? 'bg-red-500/40 text-white border border-red-500/60'
+                    : 'bg-black/40 text-white/70 border border-white/20'
                 }`}
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
                 onMouseEnter={() => setHighlightedTool(index)}
                 onMouseLeave={() => setHighlightedTool(null)}
-                onClick={() => onToolClick?.(tool)}
               >
-                <span className={`text-xs px-3 py-2 rounded-full border backdrop-blur-sm transition-all duration-300 ${
-                  highlightedTool === index
-                    ? 'bg-red-500/40 text-white border-red-500/60 shadow-lg shadow-red-500/20'
-                    : 'bg-gradient-to-r from-black/60 to-black/40 text-white/90 border-white/10 hover:bg-white/20'
-                }`}>
-                  {tool.name}
-                </span>
-                <div className={`absolute -top-1 -right-1 w-2 h-2 rounded-full transition-all duration-300 ${
-                  highlightedTool === index
-                    ? 'bg-red-500 animate-ping'
-                    : 'bg-gradient-to-r from-red-500 to-orange-500 opacity-60 animate-pulse'
-                }`} />
-
-                {/* Category badge */}
-                <div className={`absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs px-2 py-1 rounded bg-black/60 text-white/70 border border-white/10 transition-all duration-300 ${
-                  highlightedTool === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                }`}>
-                  {tool.category}
-                </div>
-              </div>
+                {tool.name}
+              </span>
             ))}
           </div>
         </div>
-
-        {/* Corner accent */}
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-radial from-red-500/20 to-transparent rounded-full" />
       </div>
     </div>
   );
