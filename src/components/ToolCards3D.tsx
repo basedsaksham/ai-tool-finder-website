@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Box, Text, RoundedBox } from '@react-three/drei';
+import { Box } from '@react-three/drei';
 import { Mesh } from 'three';
 import { AITool } from '@/types/tool';
 
@@ -36,57 +36,19 @@ function ToolCard3D({ tool, position, onClick }: ToolCard3DProps) {
 
   return (
     <group position={position}>
-      <RoundedBox
+      <Box
         ref={meshRef}
         args={[2, 2.5, 0.2]}
-        radius={0.1}
-        smoothness={4}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
         onClick={onClick}
       >
         <meshStandardMaterial color={hovered ? '#E50914' : '#1a1a1a'} />
-      </RoundedBox>
-      
-      <Text
-        position={[0, 0.8, 0.11]}
-        fontSize={0.2}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-        maxWidth={1.8}
-        textAlign="center"
-      >
-        {tool.name}
-      </Text>
-      
-      <Text
-        position={[0, 0.4, 0.11]}
-        fontSize={0.1}
-        color="#888"
-        anchorX="center"
-        anchorY="middle"
-        maxWidth={1.8}
-        textAlign="center"
-      >
-        {tool.category}
-      </Text>
+      </Box>
 
       <Box args={[1.6, 0.3, 0.05]} position={[0, -0.8, 0.11]}>
         <meshStandardMaterial color={getPricingColor()} />
       </Box>
-      
-      <Text
-        position={[0, -0.8, 0.16]}
-        fontSize={0.12}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {tool.pricing.type === 'free' ? 'FREE' : 
-         tool.pricing.type === 'freemium' ? 'FREEMIUM' :
-         `$${tool.pricing.startingPrice}/mo`}
-      </Text>
     </group>
   );
 }
