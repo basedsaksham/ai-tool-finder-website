@@ -162,6 +162,7 @@ interface ToolCards3DProps {
 const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
   const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
+  const [cameraPos, setCameraPos] = useState(new Vector3(0, 0, 8));
 
   // Fixed card positions in a circle
   const cardPositions = useMemo(() => {
