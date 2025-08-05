@@ -262,9 +262,24 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
   const [isDragging, setIsDragging] = useState(false);
   const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  // Function to get tool icon/logo
+  const getToolIcon = (toolName: string) => {
+    const iconMap: { [key: string]: string } = {
+      'ChatGPT': '🤖',
+      'MidJourney': '🎨',
+      'GitHub Copilot': '👨‍💻',
+      'Runway ML': '🎬',
+      'Notion AI': '📝',
+      'Claude': '🧠'
+    };
+    return iconMap[toolName] || '⭐';
+  };
 
   return (
     <div
+      ref={canvasRef}
       className="h-96 w-full relative overflow-hidden rounded-xl"
       onMouseDown={() => setIsDragging(true)}
       onMouseUp={() => setIsDragging(false)}
