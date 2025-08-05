@@ -62,18 +62,19 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6); // Show first 6 tools
 
   return (
-    <div className="h-96 w-full">
+    <div className="h-96 w-full relative">
       <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
-        <pointLight position={[-10, -10, -10]} color="#E50914" intensity={0.5} />
-        
+        <ambientLight intensity={0.6} />
+        <pointLight position={[10, 10, 10]} intensity={0.8} />
+        <pointLight position={[-10, -10, -10]} color="#E50914" intensity={0.4} />
+        <pointLight position={[0, 10, -10]} color="#3b82f6" intensity={0.3} />
+
         {visibleTools.map((tool, index) => {
           const angle = (index / visibleTools.length) * Math.PI * 2;
           const radius = 4;
           const x = Math.cos(angle) * radius;
           const z = Math.sin(angle) * radius;
-          
+
           return (
             <ToolCard3D
               key={tool.id}
@@ -84,6 +85,23 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           );
         })}
       </Canvas>
+
+      {/* Overlay with tool names */}
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-white/60 text-sm mb-2">Click and drag to explore</p>
+          <div className="flex flex-wrap justify-center gap-2 max-w-md">
+            {visibleTools.map((tool) => (
+              <span
+                key={tool.id}
+                className="text-xs bg-black/30 text-white/80 px-2 py-1 rounded"
+              >
+                {tool.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
