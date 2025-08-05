@@ -153,7 +153,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {topTools.map((tool, index) => (
-              <Card key={tool.name} className="group hover:shadow-card transition-all duration-300 hover:-translate-y-1 border-border">
+              <Card key={tool.name} className="group hover:shadow-card transition-all duration-300 hover:-translate-y-1 border-border bg-background/60 backdrop-blur-sm hover:bg-background/80">
                 <CardContent className="p-6">
                   <div className="text-center space-y-4">
                     <div className="relative">
