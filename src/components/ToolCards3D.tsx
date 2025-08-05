@@ -295,15 +295,15 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
               onClick={() => onToolClick?.(tool)}
             >
               {/* Card content directly on the 3D card */}
-              <div className={`relative w-32 h-40 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 ${
+              <div className={`relative w-36 h-44 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 ${
                 highlightedTool === index ? 'scale-110' : ''
               }`}>
 
-                {/* Tool Logo/Icon */}
-                <div className={`text-4xl mb-2 transition-all duration-300 ${
-                  highlightedTool === index ? 'scale-125 animate-bounce' : ''
+                {/* Tool Logo */}
+                <div className={`mb-3 transition-all duration-300 ${
+                  highlightedTool === index ? 'scale-125 animate-pulse' : ''
                 }`}>
-                  {getToolIcon(tool.name)}
+                  {getToolLogo(tool.name)}
                 </div>
 
                 {/* Tool Name */}
