@@ -266,7 +266,12 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
   const [isDragging, setIsDragging] = useState(false);
   const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
+  const [cameraPosition, setCameraPosition] = useState(new Vector3(0, 0, 8));
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  const handleCameraUpdate = (position: Vector3, rotation: any) => {
+    setCameraPosition(position.clone());
+  };
 
   // Function to get tool icon/logo
   const getToolIcon = (toolName: string) => {
