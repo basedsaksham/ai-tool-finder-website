@@ -342,13 +342,25 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           const z = Math.sin(angle) * radius;
           const y = Math.sin(index * 0.5) * 0.5;
 
-          // Convert 3D position to 2D screen position (simplified)
-          const screenX = 50 + (x / 8) * 30; // Center at 50% + offset
-          const screenY = 50 - (y / 4) * 20; // Center at 50% + offset
-          const screenZ = z; // Use for depth-based scaling
+          // More accurate 3D to 2D projection considering camera position
+          const relativeX = x - cameraPosition.x;
+          const relativeZ = z - cameraPosition.z;
+          const relativeY = y - cameraPosition.y;
 
-          const scale = Math.max(0.6, 1 - Math.abs(screenZ) / 10);
-          const opacity = Math.max(0.4, 1 - Math.abs(screenZ) / 8);
+          // Project to screen space
+          const fov = 60 * (Math.PI / 180); // Convert to radians
+          const distance = Math.sqrt(relativeX * relativeX + relativeZ * relativeZ);
+          const depth = Math.abs(relativeZ);
+
+          const screenX = 50 + (relativeX / (depth + 8)) * 200; // More responsive projection
+          const screenY = 50 - (relativeY / (depth + 8)) * 150;
+
+          const scale = Math.max(0.5, Math.min(1.2, 8 / (depth + 4)));
+          const opacity = Math.max(0.3, Math.min(1, 8 / (depth + 2)));
+
+          // Enhanced visibility for front-facing cards
+          const isFrontFacing = relativeZ > -2;
+          const finalOpacity = isFrontFacing ? opacity : opacity * 0.5;
 
           return (
             <div
