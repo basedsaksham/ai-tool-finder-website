@@ -89,19 +89,22 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   };
 
   return (
-    <div className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm">
+    <div
+      ref={containerRef}
+      className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm"
+    >
       {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-20">
         {/* Floating orbs */}
-        {Array.from({ length: 8 }).map((_, i) => (
+        {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="absolute w-4 h-4 bg-gradient-to-r from-red-500 to-purple-500 rounded-full animate-float opacity-60"
+            className="absolute w-3 h-3 bg-gradient-to-r from-red-500 to-purple-500 rounded-full animate-float opacity-40"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
+              animationDelay: `${i * 0.8}s`,
+              animationDuration: `${4 + Math.random() * 2}s`,
             }}
           />
         ))}
@@ -109,118 +112,118 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
 
       {/* Instructions */}
       <div className="absolute top-6 left-6 text-white/80 z-30">
-        <p className="text-sm font-medium">✨ Hover to explore tools</p>
+        <p className="text-sm font-medium">🖱️ Move mouse to rotate</p>
       </div>
 
-      {/* Animated Tool Cards */}
+      {/* Rotating Door Container */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative w-full h-full max-w-4xl">
-          {visibleTools.map((tool, index) => {
-            // Arrange cards in a dynamic grid pattern
-            const positions = [
-              { x: '20%', y: '25%' },  // Top left
-              { x: '50%', y: '20%' },  // Top center
-              { x: '80%', y: '30%' },  // Top right
-              { x: '25%', y: '70%' },  // Bottom left
-              { x: '50%', y: '75%' },  // Bottom center
-              { x: '75%', y: '65%' },  // Bottom right
-            ];
+        <div
+          className="relative w-full h-full"
+          style={{
+            perspective: '1000px',
+            perspectiveOrigin: 'center center',
+          }}
+        >
+          {/* Central pivot point */}
+          <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-red-500/50 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-40" />
 
-            const position = positions[index] || { x: '50%', y: '50%' };
+          {/* Rotating cards container */}
+          <div
+            className="absolute inset-0 transition-transform duration-300 ease-out"
+            style={{
+              transform: `rotateY(${rotationAngle}deg)`,
+              transformStyle: 'preserve-3d',
+            }}
+          >
+            {visibleTools.map((tool, index) => {
+              // Calculate position in circular arrangement
+              const angleStep = 360 / visibleTools.length;
+              const cardAngle = index * angleStep;
+              const radius = 180; // Distance from center
 
-            return (
-              <div
-                key={tool.id}
-                className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 cursor-pointer ${
-                  highlightedTool === index ? 'z-30' : 'z-20'
-                }`}
-                style={{
-                  left: position.x,
-                  top: position.y,
-                  animationDelay: `${index * 0.2}s`,
-                }}
-                onMouseEnter={() => setHighlightedTool(index)}
-                onMouseLeave={() => setHighlightedTool(null)}
-                onClick={() => onToolClick?.(tool)}
-              >
-                {/* Main Card */}
-                <div className={`relative p-6 rounded-2xl backdrop-blur-md border transition-all duration-500 animate-fade-in ${
-                  highlightedTool === index 
-                    ? 'bg-red-500/30 border-red-500/60 shadow-2xl shadow-red-500/40 scale-110 -rotate-2' 
-                    : 'bg-black/40 border-white/20 hover:bg-black/60 hover:border-white/40 hover:scale-105'
-                }`}>
-                  
-                  {/* Tool Logo with bounce animation */}
-                  <div className={`mb-4 transition-all duration-300 ${
-                    highlightedTool === index ? 'animate-bounce' : 'hover:scale-110'
+              // Convert to 3D position
+              const x = Math.sin((cardAngle * Math.PI) / 180) * radius;
+              const z = Math.cos((cardAngle * Math.PI) / 180) * radius;
+
+              return (
+                <div
+                  key={tool.id}
+                  className={`absolute transition-all duration-500 cursor-pointer ${
+                    highlightedTool === index ? 'z-30' : 'z-20'
+                  }`}
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${-cardAngle}deg)`,
+                    transformStyle: 'preserve-3d',
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                  onMouseEnter={() => setHighlightedTool(index)}
+                  onMouseLeave={() => setHighlightedTool(null)}
+                  onClick={() => onToolClick?.(tool)}
+                >
+                  {/* Card with improved proportions */}
+                  <div className={`relative w-48 h-56 p-4 rounded-xl backdrop-blur-md border transition-all duration-500 animate-fade-in ${
+                    highlightedTool === index
+                      ? 'bg-red-500/30 border-red-500/60 shadow-2xl shadow-red-500/40 scale-110'
+                      : 'bg-black/50 border-white/30 hover:bg-black/70 hover:border-white/50 hover:scale-105'
                   }`}>
-                    {getToolLogo(tool.name)}
-                  </div>
-                  
-                  {/* Tool Name */}
-                  <h3 className={`font-bold text-lg mb-2 transition-all duration-300 text-center ${
-                    highlightedTool === index 
-                      ? 'text-red-200 text-xl' 
-                      : 'text-white'
-                  }`}>
-                    {tool.name}
-                  </h3>
-                  
-                  {/* Category */}
-                  <p className={`text-sm mb-3 text-center transition-colors duration-300 ${
-                    highlightedTool === index ? 'text-red-300' : 'text-white/70'
-                  }`}>
-                    {tool.category}
-                  </p>
-                  
-                  {/* Pricing Badge */}
-                  <div className={`text-center mb-3`}>
-                    <div className={`inline-block px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
-                      tool.pricing.type === 'free' 
-                        ? 'bg-green-500 text-white shadow-lg shadow-green-500/40' :
-                      tool.pricing.type === 'freemium' 
-                        ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/40' :
-                        'bg-orange-500 text-white shadow-lg shadow-orange-500/40'
-                    } ${highlightedTool === index ? 'scale-110 animate-pulse' : ''}`}>
-                      {tool.pricing.type === 'free' ? 'FREE' : 
-                       tool.pricing.type === 'freemium' ? 'FREEMIUM' :
-                       `$${tool.pricing.startingPrice}/mo`}
+
+                    {/* Tool Logo */}
+                    <div className={`mb-3 flex justify-center transition-all duration-300 ${
+                      highlightedTool === index ? 'animate-pulse scale-110' : 'hover:scale-110'
+                    }`}>
+                      {getToolLogo(tool.name)}
                     </div>
+
+                    {/* Tool Name */}
+                    <h3 className={`font-bold text-base mb-2 transition-all duration-300 text-center ${
+                      highlightedTool === index
+                        ? 'text-red-200 text-lg'
+                        : 'text-white'
+                    }`}>
+                      {tool.name}
+                    </h3>
+
+                    {/* Category */}
+                    <p className={`text-xs mb-3 text-center transition-colors duration-300 ${
+                      highlightedTool === index ? 'text-red-300' : 'text-white/70'
+                    }`}>
+                      {tool.category}
+                    </p>
+
+                    {/* Pricing Badge */}
+                    <div className="text-center mb-3">
+                      <div className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                        tool.pricing.type === 'free'
+                          ? 'bg-green-500 text-white shadow-lg shadow-green-500/40' :
+                        tool.pricing.type === 'freemium'
+                          ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/40' :
+                          'bg-orange-500 text-white shadow-lg shadow-orange-500/40'
+                      } ${highlightedTool === index ? 'scale-110 animate-pulse' : ''}`}>
+                        {tool.pricing.type === 'free' ? 'FREE' :
+                         tool.pricing.type === 'freemium' ? 'FREEMIUM' :
+                         `$${tool.pricing.startingPrice}/mo`}
+                      </div>
+                    </div>
+
+                    {/* Rating */}
+                    <div className={`flex items-center justify-center gap-1 transition-all duration-300 ${
+                      highlightedTool === index ? 'text-yellow-300 scale-110' : 'text-yellow-400'
+                    }`}>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-white font-semibold text-sm">{tool.rating}</span>
+                    </div>
+
+                    {/* Glow effect for highlighted card */}
+                    {highlightedTool === index && (
+                      <div className="absolute inset-0 border-2 border-red-500/60 rounded-xl bg-red-500/10 backdrop-blur-sm animate-pulse -z-10" />
+                    )}
                   </div>
-                  
-                  {/* Rating */}
-                  <div className={`flex items-center justify-center gap-2 transition-all duration-300 ${
-                    highlightedTool === index ? 'text-yellow-300 scale-110' : 'text-yellow-400'
-                  }`}>
-                    <span className="text-yellow-400 text-lg">★</span>
-                    <span className="text-white font-semibold">{tool.rating}</span>
-                  </div>
-                  
-                  {/* Glow effect for highlighted card */}
-                  {highlightedTool === index && (
-                    <div className="absolute inset-0 border-2 border-red-500/60 rounded-2xl bg-red-500/10 backdrop-blur-sm animate-pulse -z-10" />
-                  )}
-                  
-                  {/* Floating particles for highlighted card */}
-                  {highlightedTool === index && (
-                    <>
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute w-2 h-2 bg-red-400 rounded-full animate-ping opacity-60"
-                          style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                            animationDelay: `${i * 0.2}s`,
-                          }}
-                        />
-                      ))}
-                    </>
-                  )}
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
