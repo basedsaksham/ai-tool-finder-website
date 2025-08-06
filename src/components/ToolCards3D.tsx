@@ -122,7 +122,10 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
                 width: `${radius * 2}px`,
                 height: `${radius * 2}px`,
                 transform: 'translate(-50%, -50%)',
-                animation: `pulse ${4 + i}s ease-in-out infinite`,
+                animationName: 'pulse',
+                animationDuration: `${4 + i}s`,
+                animationTimingFunction: 'ease-in-out',
+                animationIterationCount: 'infinite',
                 animationDelay: `${i * 0.5}s`,
               }}
             />
