@@ -133,24 +133,30 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         </div>
         
         {/* Floating cosmic particles */}
-        {Array.from({ length: 15 }).map((_, i) => (
-          <div
-            key={`particle-${i}`}
-            className={`absolute rounded-full opacity-30 ${
-              i % 4 === 0 ? 'bg-red-400/40' : 
-              i % 4 === 1 ? 'bg-blue-400/40' : 
-              i % 4 === 2 ? 'bg-purple-400/40' : 'bg-green-400/40'
-            }`}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${4 + Math.random() * 8}px`,
-              height: `${4 + Math.random() * 8}px`,
-              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
-              animationDelay: `${i * 0.2}s`,
-            }}
-          />
-        ))}
+        {Array.from({ length: 15 }).map((_, i) => {
+          const duration = 3 + Math.random() * 4;
+          return (
+            <div
+              key={`particle-${i}`}
+              className={`absolute rounded-full opacity-30 ${
+                i % 4 === 0 ? 'bg-red-400/40' :
+                i % 4 === 1 ? 'bg-blue-400/40' :
+                i % 4 === 2 ? 'bg-purple-400/40' : 'bg-green-400/40'
+              }`}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${4 + Math.random() * 8}px`,
+                height: `${4 + Math.random() * 8}px`,
+                animationName: 'float',
+                animationDuration: `${duration}s`,
+                animationTimingFunction: 'ease-in-out',
+                animationIterationCount: 'infinite',
+                animationDelay: `${i * 0.2}s`,
+              }}
+            />
+          );
+        })}
         
         {/* Central energy core */}
         <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-red-500/60 rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-pulse shadow-lg shadow-red-500/50" />
