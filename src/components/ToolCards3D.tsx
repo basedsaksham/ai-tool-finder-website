@@ -10,8 +10,10 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const visibleTools = tools.slice(0, 6);
   const [highlightedTool, setHighlightedTool] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [rotationAngle, setRotationAngle] = useState(0);
+  const [orbitalSpeed, setOrbitalSpeed] = useState(1);
+  const [animationTime, setAnimationTime] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number>();
 
   // Mouse tracking for orbital speed control
   useEffect(() => {
@@ -20,16 +22,16 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         const rect = containerRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-
+        
         const x = (e.clientX - centerX) / (rect.width / 2);
         const y = (e.clientY - centerY) / (rect.height / 2);
-
+        
         setMousePosition({ x, y });
-
-        // Calculate orbital speed based on mouse position
+        
+        // Calculate orbital speed based on mouse distance from center
         const distance = Math.sqrt(x * x + y * y);
-        const speed = Math.max(0.1, Math.min(2, distance * 2));
-        setRotationAngle(speed);
+        const speed = Math.max(0.2, Math.min(3, 1 + distance * 2));
+        setOrbitalSpeed(speed);
       }
     };
 
@@ -39,6 +41,21 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
       return () => container.removeEventListener('mousemove', handleMouseMove);
     }
   }, []);
+
+  // Animation loop
+  useEffect(() => {
+    const animate = () => {
+      setAnimationTime(prev => prev + 0.016 * orbitalSpeed); // 60fps with speed control
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [orbitalSpeed]);
 
   // Get tool logo component
   const getToolLogo = (toolName: string) => {
@@ -80,7 +97,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         </div>
       )
     };
-
+    
     return logoComponents[toolName] || (
       <div className="w-14 h-14 bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl flex items-center justify-center shadow-lg">
         <div className="text-white font-bold text-xl">?</div>
@@ -89,185 +106,189 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   };
 
   return (
-    <div
+    <div 
       ref={containerRef}
       className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm"
     >
       {/* Enhanced animated background */}
       <div className="absolute inset-0">
-        {/* Animated gradient rays */}
-        <div className="absolute inset-0 opacity-30">
-          {Array.from({ length: 8 }).map((_, i) => (
+        {/* Orbital paths */}
+        <div className="absolute inset-0 opacity-20">
+          {[120, 160, 200, 240].map((radius, i) => (
             <div
-              key={`ray-${i}`}
-              className="absolute w-px h-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent"
+              key={`orbit-${i}`}
+              className="absolute top-1/2 left-1/2 border border-white/10 rounded-full"
               style={{
-                left: `${12.5 * (i + 1)}%`,
-                animationDelay: `${i * 0.3}s`,
-                animation: `pulse 3s ease-in-out infinite`,
+                width: `${radius * 2}px`,
+                height: `${radius * 2}px`,
+                transform: 'translate(-50%, -50%)',
+                animation: `pulse ${4 + i}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`,
               }}
             />
           ))}
         </div>
-
-        {/* Floating geometric shapes */}
-        {Array.from({ length: 12 }).map((_, i) => (
+        
+        {/* Floating cosmic particles */}
+        {Array.from({ length: 15 }).map((_, i) => (
           <div
-            key={`shape-${i}`}
-            className={`absolute rounded-full opacity-20 ${
-              i % 3 === 0 ? 'bg-red-500/30' :
-              i % 3 === 1 ? 'bg-blue-500/30' : 'bg-purple-500/30'
+            key={`particle-${i}`}
+            className={`absolute rounded-full opacity-30 ${
+              i % 4 === 0 ? 'bg-red-400/40' : 
+              i % 4 === 1 ? 'bg-blue-400/40' : 
+              i % 4 === 2 ? 'bg-purple-400/40' : 'bg-green-400/40'
             }`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              width: `${20 + Math.random() * 40}px`,
-              height: `${20 + Math.random() * 40}px`,
-              animationDelay: `${i * 0.5}s`,
-              animation: `float ${4 + Math.random() * 3}s ease-in-out infinite`,
+              width: `${4 + Math.random() * 8}px`,
+              height: `${4 + Math.random() * 8}px`,
+              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
+              animationDelay: `${i * 0.2}s`,
             }}
           />
         ))}
-
-        {/* Subtle grid pattern */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
-
-        {/* Animated light beams */}
-        <div className="absolute inset-0 overflow-hidden">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={`beam-${i}`}
-              className="absolute w-full h-px bg-gradient-to-r from-transparent via-red-500/40 to-transparent"
-              style={{
-                top: `${25 + i * 25}%`,
-                animationDelay: `${i * 1.5}s`,
-                animation: `pulse 4s ease-in-out infinite`,
-              }}
-            />
-          ))}
-        </div>
+        
+        {/* Central energy core */}
+        <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-red-500/60 rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-pulse shadow-lg shadow-red-500/50" />
       </div>
 
       {/* Instructions */}
       <div className="absolute top-6 left-6 text-white/80 z-30">
-        <p className="text-sm font-medium">🖱️ Move mouse to rotate</p>
+        <p className="text-sm font-medium">🌌 Move mouse to control orbital velocity</p>
       </div>
 
-      {/* Rotating Door Container */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className="relative w-full h-full"
-          style={{
-            perspective: '1000px',
-            perspectiveOrigin: 'center center',
-          }}
-        >
-          {/* Rotating cards container */}
-          <div
-            className="absolute inset-0 transition-transform duration-300 ease-out"
-            style={{
-              transform: `rotateY(${rotationAngle}deg)`,
-              transformStyle: 'preserve-3d',
-            }}
-          >
-            {visibleTools.map((tool, index) => {
-              // Calculate position in circular arrangement
-              const angleStep = 360 / visibleTools.length;
-              const cardAngle = index * angleStep;
-              const radius = 180; // Distance from center
-
-              // Convert to 3D position
-              const x = Math.sin((cardAngle * Math.PI) / 180) * radius;
-              const z = Math.cos((cardAngle * Math.PI) / 180) * radius;
-
-              return (
-                <div
-                  key={tool.id}
-                  className={`absolute transition-all duration-500 cursor-pointer ${
-                    highlightedTool === index ? 'z-30' : 'z-20'
-                  }`}
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${-cardAngle}deg)`,
-                    transformStyle: 'preserve-3d',
-                    animationDelay: `${index * 0.1}s`,
-                  }}
-                  onMouseEnter={() => setHighlightedTool(index)}
-                  onMouseLeave={() => setHighlightedTool(null)}
-                  onClick={() => onToolClick?.(tool)}
-                >
-                  {/* Card with improved proportions */}
-                  <div className={`relative w-48 h-56 p-4 rounded-xl backdrop-blur-md border transition-all duration-500 animate-fade-in ${
-                    highlightedTool === index
-                      ? 'bg-red-500/30 border-red-500/60 shadow-2xl shadow-red-500/40 scale-110'
-                      : 'bg-black/50 border-white/30 hover:bg-black/70 hover:border-white/50 hover:scale-105'
-                  }`}>
-
-                    {/* Tool Logo */}
-                    <div className={`mb-3 flex justify-center transition-all duration-300 ${
-                      highlightedTool === index ? 'animate-pulse scale-110' : 'hover:scale-110'
-                    }`}>
-                      {getToolLogo(tool.name)}
-                    </div>
-
-                    {/* Tool Name */}
-                    <h3 className={`font-bold text-base mb-2 transition-all duration-300 text-center ${
-                      highlightedTool === index
-                        ? 'text-red-200 text-lg'
-                        : 'text-white'
-                    }`}>
-                      {tool.name}
-                    </h3>
-
-                    {/* Category */}
-                    <p className={`text-xs mb-3 text-center transition-colors duration-300 ${
-                      highlightedTool === index ? 'text-red-300' : 'text-white/70'
-                    }`}>
-                      {tool.category}
-                    </p>
-
-                    {/* Pricing Badge */}
-                    <div className="text-center mb-3">
-                      <div className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
-                        tool.pricing.type === 'free'
-                          ? 'bg-green-500 text-white shadow-lg shadow-green-500/40' :
-                        tool.pricing.type === 'freemium'
-                          ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/40' :
-                          'bg-orange-500 text-white shadow-lg shadow-orange-500/40'
-                      } ${highlightedTool === index ? 'scale-110 animate-pulse' : ''}`}>
-                        {tool.pricing.type === 'free' ? 'FREE' :
-                         tool.pricing.type === 'freemium' ? 'FREEMIUM' :
-                         `$${tool.pricing.startingPrice}/mo`}
-                      </div>
-                    </div>
-
-                    {/* Rating */}
-                    <div className={`flex items-center justify-center gap-1 transition-all duration-300 ${
-                      highlightedTool === index ? 'text-yellow-300 scale-110' : 'text-yellow-400'
-                    }`}>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-white font-semibold text-sm">{tool.rating}</span>
-                    </div>
-
-                    {/* Glow effect for highlighted card */}
-                    {highlightedTool === index && (
-                      <div className="absolute inset-0 border-2 border-red-500/60 rounded-xl bg-red-500/10 backdrop-blur-sm animate-pulse -z-10" />
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+      {/* Speed indicator */}
+      <div className="absolute top-6 right-6 text-white/60 z-30">
+        <div className="flex items-center gap-2">
+          <div className="text-xs">Speed:</div>
+          <div className="w-16 h-2 bg-white/20 rounded-full">
+            <div 
+              className="h-full bg-red-500 rounded-full transition-all duration-300"
+              style={{ width: `${Math.min(100, (orbitalSpeed / 3) * 100)}%` }}
+            />
           </div>
+        </div>
+      </div>
+
+      {/* Floating Orbital System */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="relative w-full h-full">
+          {visibleTools.map((tool, index) => {
+            // Create orbital layers with different characteristics
+            const orbitConfigs = [
+              { radius: 120, speed: 1, tilt: 0, phase: 0 },
+              { radius: 160, speed: 0.7, tilt: 15, phase: 60 },
+              { radius: 140, speed: 1.3, tilt: -10, phase: 120 },
+              { radius: 200, speed: 0.5, tilt: 20, phase: 180 },
+              { radius: 180, speed: 0.9, tilt: -15, phase: 240 },
+              { radius: 220, speed: 0.6, tilt: 10, phase: 300 },
+            ];
+            
+            const config = orbitConfigs[index] || orbitConfigs[0];
+            
+            // Calculate orbital position
+            const angle = (animationTime * config.speed + config.phase) % 360;
+            const x = Math.cos(angle * Math.PI / 180) * config.radius;
+            const z = Math.sin(angle * Math.PI / 180) * config.radius;
+            
+            // Add floating motion
+            const floatY = Math.sin(animationTime * 0.8 + index * 2) * 15;
+            
+            // Calculate scale based on z-position (depth)
+            const scale = 0.8 + (z + config.radius) / (config.radius * 4);
+            const opacity = 0.6 + (z + config.radius) / (config.radius * 2);
+            
+            return (
+              <div
+                key={tool.id}
+                className={`absolute transition-all duration-300 cursor-pointer ${
+                  highlightedTool === index ? 'z-30' : 'z-20'
+                }`}
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: `
+                    translate(-50%, -50%) 
+                    translateX(${x}px) 
+                    translateY(${floatY}px) 
+                    translateZ(${z}px)
+                    scale(${scale})
+                    rotateX(${config.tilt}deg)
+                    rotateY(${-angle}deg)
+                  `,
+                  opacity: Math.max(0.4, Math.min(1, opacity)),
+                  transformStyle: 'preserve-3d',
+                  perspective: '1000px',
+                }}
+                onMouseEnter={() => setHighlightedTool(index)}
+                onMouseLeave={() => setHighlightedTool(null)}
+                onClick={() => onToolClick?.(tool)}
+              >
+                {/* Card with cosmic styling */}
+                <div className={`relative w-44 h-52 p-4 rounded-xl backdrop-blur-md border transition-all duration-500 ${
+                  highlightedTool === index 
+                    ? 'bg-red-500/40 border-red-500/80 shadow-2xl shadow-red-500/50 scale-110' 
+                    : 'bg-black/60 border-white/30 hover:bg-black/80 hover:border-white/50 hover:scale-105'
+                }`}>
+                  
+                  {/* Tool Logo */}
+                  <div className={`mb-3 flex justify-center transition-all duration-300 ${
+                    highlightedTool === index ? 'animate-pulse scale-110' : 'hover:scale-110'
+                  }`}>
+                    {getToolLogo(tool.name)}
+                  </div>
+                  
+                  {/* Tool Name */}
+                  <h3 className={`font-bold text-base mb-2 transition-all duration-300 text-center ${
+                    highlightedTool === index 
+                      ? 'text-red-200 text-lg' 
+                      : 'text-white'
+                  }`}>
+                    {tool.name}
+                  </h3>
+                  
+                  {/* Category */}
+                  <p className={`text-xs mb-3 text-center transition-colors duration-300 ${
+                    highlightedTool === index ? 'text-red-300' : 'text-white/70'
+                  }`}>
+                    {tool.category}
+                  </p>
+                  
+                  {/* Pricing Badge */}
+                  <div className="text-center mb-3">
+                    <div className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                      tool.pricing.type === 'free' 
+                        ? 'bg-green-500 text-white shadow-lg shadow-green-500/40' :
+                      tool.pricing.type === 'freemium' 
+                        ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/40' :
+                        'bg-orange-500 text-white shadow-lg shadow-orange-500/40'
+                    } ${highlightedTool === index ? 'scale-110 animate-pulse' : ''}`}>
+                      {tool.pricing.type === 'free' ? 'FREE' : 
+                       tool.pricing.type === 'freemium' ? 'FREEMIUM' :
+                       `$${tool.pricing.startingPrice}/mo`}
+                    </div>
+                  </div>
+                  
+                  {/* Rating */}
+                  <div className={`flex items-center justify-center gap-1 transition-all duration-300 ${
+                    highlightedTool === index ? 'text-yellow-300 scale-110' : 'text-yellow-400'
+                  }`}>
+                    <span className="text-yellow-400">★</span>
+                    <span className="text-white font-semibold text-sm">{tool.rating}</span>
+                  </div>
+                  
+                  {/* Cosmic glow for highlighted card */}
+                  {highlightedTool === index && (
+                    <>
+                      <div className="absolute inset-0 border-2 border-red-500/60 rounded-xl bg-red-500/10 backdrop-blur-sm animate-pulse -z-10" />
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-500/20 to-purple-500/20 blur-sm -z-20" />
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -296,16 +317,16 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
       <div className="absolute inset-0 pointer-events-none">
         {/* Radial gradient from center */}
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/30" />
-
+        
         {/* Subtle vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
-
+        
         {/* Dynamic light effect that follows mouse */}
-        <div
-          className="absolute w-96 h-96 rounded-full bg-red-500/5 blur-3xl transition-all duration-700"
+        <div 
+          className="absolute w-96 h-96 rounded-full bg-red-500/10 blur-3xl transition-all duration-700"
           style={{
-            left: `${50 + mousePosition.x * 10}%`,
-            top: `${50 + mousePosition.y * 10}%`,
+            left: `${50 + mousePosition.x * 15}%`,
+            top: `${50 + mousePosition.y * 15}%`,
             transform: 'translate(-50%, -50%)',
           }}
         />
