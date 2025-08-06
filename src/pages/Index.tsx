@@ -1,8 +1,11 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import ThreeBackground from "@/components/ThreeBackground";
+import Tool3DCard from "@/components/Tool3DCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { categoryToolCounts } from "@/data/extendedMockTools";
 import { 
   Sparkles, 
   Target, 
@@ -15,42 +18,45 @@ import {
   Briefcase,
   Star
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+  
   const featuredCategories = [
     {
       icon: FileText,
       name: "Text & Writing",
       description: "AI tools for content creation, writing assistance, and text analysis",
-      toolCount: 156,
+      toolCount: categoryToolCounts["Text & Writing"],
       popular: ["ChatGPT", "Claude", "Jasper"]
     },
     {
       icon: Image,
       name: "Image & Design", 
       description: "Generate, edit, and enhance images with AI-powered creativity",
-      toolCount: 89,
+      toolCount: categoryToolCounts["Image & Design"],
       popular: ["MidJourney", "DALL-E", "Canva AI"]
     },
     {
       icon: Code,
       name: "Development",
       description: "Code assistants, automation tools, and development accelerators",
-      toolCount: 78,
+      toolCount: categoryToolCounts["Development"],
       popular: ["GitHub Copilot", "Tabnine", "Replit"]
     },
     {
       icon: Video,
       name: "Video & Media",
       description: "Video generation, editing, and multimedia content creation",
-      toolCount: 45,
+      toolCount: categoryToolCounts["Video & Media"],
       popular: ["Runway ML", "Pika Labs", "Synthesia"]
     },
     {
       icon: Briefcase,
       name: "Productivity",
       description: "Boost your workflow with AI-powered productivity tools",
-      toolCount: 67,
+      toolCount: categoryToolCounts["Productivity"],
       popular: ["Notion AI", "Otter.ai", "Grammarly"]
     }
   ];
@@ -62,8 +68,13 @@ const Index = () => {
     { name: "Runway ML", category: "Video & Media", rating: 4.6, pricing: "Freemium", isTrending: true }
   ];
 
+  const handleCategoryClick = (categoryName: string) => {
+    navigate(`/tools?category=${encodeURIComponent(categoryName)}`);
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <ThreeBackground />
       <Header />
       <Hero />
       
@@ -112,7 +123,11 @@ const Index = () => {
                           ))}
                         </div>
                       </div>
-                      <Button variant="outline" className="w-full group-hover:bg-gradient-secondary">
+                      <Button 
+                        variant="outline" 
+                        className="w-full group-hover:bg-gradient-secondary"
+                        onClick={() => handleCategoryClick(category.name)}
+                      >
                         Explore Category
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
@@ -139,46 +154,11 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {topTools.map((tool, index) => (
-              <Card key={tool.name} className="group hover:shadow-card transition-all duration-300 hover:-translate-y-1 border-border">
-                <CardContent className="p-6">
-                  <div className="text-center space-y-4">
-                    <div className="relative">
-                      <div className="w-16 h-16 bg-gradient-primary rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold text-primary-foreground">
-                        #{index + 1}
-                      </div>
-                      {tool.isPopular && (
-                        <Badge className="absolute -top-2 -right-2 bg-yellow-500/10 text-yellow-400 border-yellow-500/20">
-                          Popular
-                        </Badge>
-                      )}
-                      {tool.isTrending && (
-                        <Badge className="absolute -top-2 -right-2 bg-gradient-primary">
-                          Trending
-                        </Badge>
-                      )}
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-semibold text-foreground">{tool.name}</h3>
-                      <p className="text-sm text-muted-foreground">{tool.category}</p>
-                    </div>
-
-                    <div className="flex items-center justify-center gap-4 text-sm">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                        <span>{tool.rating}</span>
-                      </div>
-                      <Badge variant="outline" className="border-border">
-                        {tool.pricing}
-                      </Badge>
-                    </div>
-
-                    <Button variant="outline" size="sm" className="w-full group-hover:bg-gradient-secondary">
-                      View Details
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <Tool3DCard
+                key={tool.name}
+                tool={tool}
+                index={index}
+              />
             ))}
           </div>
         </div>

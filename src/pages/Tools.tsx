@@ -1,13 +1,17 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { mockTools } from "@/data/mockTools";
+import { videoMediaTools } from "@/data/extendedMockTools";
 import { AITool, SearchFilters } from "@/types/tool";
 import Header from "@/components/Header";
 import CategoryFilter from "@/components/CategoryFilter";
 import ToolGrid from "@/components/ToolGrid";
+import ThreeBackground from "@/components/ThreeBackground";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 const Tools = () => {
+  const [searchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<SearchFilters>({
     sortBy: 'popularity'
@@ -15,9 +19,27 @@ const Tools = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [comparingTools, setComparingTools] = useState<AITool[]>([]);
 
+  // Handle category from URL params
+  useEffect(() => {
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) {
+      updateFilters('category', categoryParam);
+    }
+  }, [searchParams]);
+
+  // Get tools based on selected category
+  const getToolsForCategory = () => {
+    if (filters.category === "Video & Media") {
+      return videoMediaTools;
+    }
+    // Return mockTools for other categories (in a real app, you'd have separate arrays)
+    return mockTools;
+  };
+
   // Filter and sort tools
   const filteredTools = useMemo(() => {
-    let filtered = mockTools.filter(tool => {
+    const toolsSource = getToolsForCategory();
+    let filtered = toolsSource.filter(tool => {
       // Search query filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -89,7 +111,8 @@ const Tools = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <ThreeBackground />
       <Header />
       
       <div className="container mx-auto px-4 py-8">
