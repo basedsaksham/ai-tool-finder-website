@@ -132,6 +132,7 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out',
 				'scale-in': 'scale-in 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
+				'revolve': 'revolve 20s linear infinite',
 			}
 		}
 	},
