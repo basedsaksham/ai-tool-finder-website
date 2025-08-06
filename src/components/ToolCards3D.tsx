@@ -13,7 +13,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const [rotationAngle, setRotationAngle] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Mouse tracking for rotation control
+  // Mouse tracking for orbital speed control
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
@@ -26,10 +26,10 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
 
         setMousePosition({ x, y });
 
-        // Calculate rotation based on mouse X position
-        const maxRotation = 45; // degrees
-        const rotation = x * maxRotation;
-        setRotationAngle(rotation);
+        // Calculate orbital speed based on mouse position
+        const distance = Math.sqrt(x * x + y * y);
+        const speed = Math.max(0.1, Math.min(2, distance * 2));
+        setRotationAngle(speed);
       }
     };
 
