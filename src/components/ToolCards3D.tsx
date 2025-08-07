@@ -185,9 +185,9 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         <div className="absolute top-1/2 left-1/2 w-64 h-64 border border-blue-200/20 rounded-full animate-ping" style={{ animationDuration: '6s', animationDelay: '2s' }}></div>
       </div>
 
-      {/* Fun instructions */}
-      <div className="absolute top-6 left-6 text-gray-700 z-30">
-        <p className="text-sm font-medium">🎭 Watch the characters play!</p>
+      {/* Calm instructions */}
+      <div className="absolute top-6 left-6 text-teal-700/80 z-30">
+        <p className="text-sm font-light">🌊 Move your cursor to interact</p>
       </div>
 
       {/* Structured Pixar-style Character Cards */}
