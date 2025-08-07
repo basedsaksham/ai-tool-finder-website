@@ -192,12 +192,22 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
         <p className="text-sm font-medium">🎭 Watch the characters play!</p>
       </div>
 
-      {/* Pixar-style Character Cards */}
+      {/* Structured Pixar-style Character Cards */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="relative w-full h-full">
           {visibleTools.map((tool, index) => {
             const position = cardPositions[index] || { x: 0, y: 0, rotation: 0, scale: 1 };
-            
+
+            // Gentle breathing and floating animations
+            const time = Date.now() * 0.001;
+            const breatheY = Math.sin(time * 1.5 + index * 0.8) * 3; // Gentle floating
+            const breatheScale = 1 + Math.sin(time * 2 + index * 0.5) * 0.02; // Subtle breathing
+            const breatheRotation = Math.sin(time * 0.8 + index * 1.2) * 1; // Gentle sway
+
+            // Subtle mouse reaction
+            const mouseX = mousePosition.x * 5;
+            const mouseY = mousePosition.y * 5;
+
             return (
               <div
                 key={tool.id}
@@ -208,11 +218,11 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
                   left: '50%',
                   top: '50%',
                   transform: `
-                    translate(-50%, -50%) 
-                    translateX(${position.x}px) 
-                    translateY(${position.y}px) 
-                    rotate(${position.rotation}deg)
-                    scale(${position.scale})
+                    translate(-50%, -50%)
+                    translateX(${position.x + mouseX * 0.1}px)
+                    translateY(${position.y + breatheY + mouseY * 0.1}px)
+                    rotate(${breatheRotation}deg)
+                    scale(${breatheScale})
                   `,
                   transformOrigin: 'center',
                 }}
