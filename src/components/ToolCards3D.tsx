@@ -187,7 +187,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
 
       {/* Calm instructions */}
       <div className="absolute top-6 left-6 text-teal-700/80 z-30">
-        <p className="text-sm font-light">🌊 Move your cursor to interact</p>
+        <p className="text-sm font-light">🌊 Hover over the tools to explore</p>
       </div>
 
       {/* Structured Pixar-style Character Cards */}
