@@ -132,60 +132,57 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
       ref={containerRef}
       className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-teal-50/30 via-blue-50/20 to-indigo-50/30 backdrop-blur-sm"
     >
-      {/* Subtle background elements */}
+      {/* Chill and soothing background */}
       <div className="absolute inset-0">
-        {/* Gentle floating bubbles */}
-        {Array.from({ length: 8 }).map((_, i) => {
-          const size = 15 + Math.random() * 10;
-          const left = 20 + (i * 10) % 60; // More structured positioning
-          const top = 20 + Math.random() * 60;
-
-          return (
+        {/* Gentle wave patterns */}
+        <div className="absolute inset-0 opacity-30">
+          {Array.from({ length: 4 }).map((_, i) => (
             <div
-              key={`bubble-${i}`}
-              className="absolute rounded-full bg-gradient-to-br from-blue-100/20 to-purple-100/20 animate-float"
+              key={`wave-${i}`}
+              className="absolute w-full h-full"
               style={{
-                left: `${left}%`,
-                top: `${top}%`,
-                width: `${size}px`,
-                height: `${size}px`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: '4s',
+                background: `linear-gradient(${45 + i * 45}deg, transparent 40%, rgba(59, 130, 246, 0.1) 50%, transparent 60%)`,
+                animation: `float ${8 + i * 2}s ease-in-out infinite`,
+                animationDelay: `${i * 2}s`,
               }}
             />
-          );
-        })}
+          ))}
+        </div>
 
-        {/* Subtle sparkles */}
+        {/* Floating zen elements */}
         {Array.from({ length: 6 }).map((_, i) => {
+          const elements = ['🌊', '🍃', '☁️', '🌸', '🦋', '💙'];
           const positions = [
-            { left: 15, top: 15 },
-            { left: 85, top: 20 },
-            { left: 10, top: 80 },
-            { left: 90, top: 85 },
-            { left: 50, top: 10 },
-            { left: 50, top: 90 },
+            { left: 10, top: 20 },
+            { left: 90, top: 25 },
+            { left: 15, top: 75 },
+            { left: 85, top: 80 },
+            { left: 25, top: 10 },
+            { left: 75, top: 90 },
           ];
-          const pos = positions[i];
 
           return (
             <div
-              key={`sparkle-${i}`}
-              className="absolute text-lg animate-pulse opacity-40"
+              key={`zen-${i}`}
+              className="absolute text-xl opacity-40 animate-float"
               style={{
-                left: `${pos.left}%`,
-                top: `${pos.top}%`,
-                animationDelay: `${i * 0.8}s`,
-                animationDuration: '3s',
+                left: `${positions[i].left}%`,
+                top: `${positions[i].top}%`,
+                animationDelay: `${i * 1.5}s`,
+                animationDuration: `${6 + i}s`,
               }}
             >
-              ✨
+              {elements[i]}
             </div>
           );
         })}
 
-        {/* Calm gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-purple-50/10 to-pink-50/20"></div>
+        {/* Soft flowing gradients */}
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-100/20 via-blue-100/15 to-indigo-100/20 animate-pulse"></div>
+
+        {/* Gentle ripple effects */}
+        <div className="absolute top-1/2 left-1/2 w-32 h-32 border border-teal-200/30 rounded-full animate-ping" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 border border-blue-200/20 rounded-full animate-ping" style={{ animationDuration: '6s', animationDelay: '2s' }}></div>
       </div>
 
       {/* Fun instructions */}
