@@ -199,15 +199,29 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           {visibleTools.map((tool, index) => {
             const position = cardPositions[index] || { x: 0, y: 0, rotation: 0, scale: 1 };
 
-            // Gentle breathing and floating animations
+            // Enhanced mouse interaction
             const time = Date.now() * 0.001;
-            const breatheY = Math.sin(time * 1.5 + index * 0.8) * 3; // Gentle floating
-            const breatheScale = 1 + Math.sin(time * 2 + index * 0.5) * 0.02; // Subtle breathing
-            const breatheRotation = Math.sin(time * 0.8 + index * 1.2) * 1; // Gentle sway
+            const breatheY = Math.sin(time * 1.5 + index * 0.8) * 2; // Gentle floating
+            const breatheScale = 1 + Math.sin(time * 2 + index * 0.5) * 0.01; // Subtle breathing
+            const breatheRotation = Math.sin(time * 0.8 + index * 1.2) * 0.5; // Gentle sway
 
-            // Subtle mouse reaction
-            const mouseX = mousePosition.x * 5;
-            const mouseY = mousePosition.y * 5;
+            // Enhanced mouse reaction - cards follow mouse more responsively
+            const mouseInfluence = 40;
+            const mouseX = mousePosition.x * mouseInfluence;
+            const mouseY = mousePosition.y * mouseInfluence;
+
+            // Distance-based mouse interaction
+            const cardCenterX = position.x;
+            const cardCenterY = position.y;
+            const distanceFromMouse = Math.sqrt(
+              Math.pow(mouseX - cardCenterX, 2) + Math.pow(mouseY - cardCenterY, 2)
+            );
+            const maxDistance = 150;
+            const mouseProximity = Math.max(0, 1 - distanceFromMouse / maxDistance);
+
+            // Interactive scaling and rotation based on mouse proximity
+            const mouseScale = 1 + mouseProximity * 0.1;
+            const mouseRotation = mouseProximity * (mousePosition.x * 10);
 
             return (
               <div
