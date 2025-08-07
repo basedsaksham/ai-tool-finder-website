@@ -130,7 +130,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   return (
     <div 
       ref={containerRef}
-      className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50/20 via-purple-50/10 to-pink-50/20 backdrop-blur-sm"
+      className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-teal-50/30 via-blue-50/20 to-indigo-50/30 backdrop-blur-sm"
     >
       {/* Subtle background elements */}
       <div className="absolute inset-0">
