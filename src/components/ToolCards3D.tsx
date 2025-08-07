@@ -234,10 +234,10 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
                   top: '50%',
                   transform: `
                     translate(-50%, -50%)
-                    translateX(${position.x + mouseX * 0.1}px)
-                    translateY(${position.y + breatheY + mouseY * 0.1}px)
-                    rotate(${breatheRotation}deg)
-                    scale(${breatheScale})
+                    translateX(${position.x + mouseX * 0.3}px)
+                    translateY(${position.y + breatheY + mouseY * 0.2}px)
+                    rotate(${breatheRotation + mouseRotation}deg)
+                    scale(${breatheScale * mouseScale})
                   `,
                   transformOrigin: 'center',
                 }}
