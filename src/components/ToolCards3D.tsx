@@ -135,56 +135,60 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
       ref={containerRef}
       className="h-96 w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50/20 via-purple-50/10 to-pink-50/20 backdrop-blur-sm"
     >
-      {/* Playful background elements */}
+      {/* Subtle background elements */}
       <div className="absolute inset-0">
-        {/* Bouncing bubbles */}
-        {Array.from({ length: 20 }).map((_, i) => {
-          const size = 10 + Math.random() * 20;
-          const left = Math.random() * 100;
-          const top = Math.random() * 100;
-          const delay = Math.random() * 4;
-          
+        {/* Gentle floating bubbles */}
+        {Array.from({ length: 8 }).map((_, i) => {
+          const size = 15 + Math.random() * 10;
+          const left = 20 + (i * 10) % 60; // More structured positioning
+          const top = 20 + Math.random() * 60;
+
           return (
             <div
               key={`bubble-${i}`}
-              className="absolute rounded-full bg-gradient-to-br from-blue-200/30 to-purple-200/30 animate-bounce"
+              className="absolute rounded-full bg-gradient-to-br from-blue-100/20 to-purple-100/20 animate-float"
               style={{
                 left: `${left}%`,
                 top: `${top}%`,
                 width: `${size}px`,
                 height: `${size}px`,
-                animationDelay: `${delay}s`,
-                animationDuration: `${2 + Math.random() * 3}s`,
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: '4s',
               }}
             />
           );
         })}
-        
-        {/* Floating hearts and sparkles */}
-        {Array.from({ length: 15 }).map((_, i) => {
-          const left = Math.random() * 100;
-          const top = Math.random() * 100;
-          const symbols = ['✨', '💫', '⭐', '🌟', '💖'];
-          const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-          
+
+        {/* Subtle sparkles */}
+        {Array.from({ length: 6 }).map((_, i) => {
+          const positions = [
+            { left: 15, top: 15 },
+            { left: 85, top: 20 },
+            { left: 10, top: 80 },
+            { left: 90, top: 85 },
+            { left: 50, top: 10 },
+            { left: 50, top: 90 },
+          ];
+          const pos = positions[i];
+
           return (
             <div
               key={`sparkle-${i}`}
-              className="absolute text-2xl animate-pulse opacity-60"
+              className="absolute text-lg animate-pulse opacity-40"
               style={{
-                left: `${left}%`,
-                top: `${top}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${3 + Math.random() * 2}s`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
+                animationDelay: `${i * 0.8}s`,
+                animationDuration: '3s',
               }}
             >
-              {symbol}
+              ✨
             </div>
           );
         })}
-        
-        {/* Soft gradient waves */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-200/10 via-purple-200/10 to-pink-200/10 animate-pulse"></div>
+
+        {/* Calm gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-purple-50/10 to-pink-50/20"></div>
       </div>
 
       {/* Fun instructions */}
