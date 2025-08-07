@@ -14,28 +14,35 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>();
 
-  // Initialize random positions for cards
+  // Initialize structured grid positions
   useEffect(() => {
-    const positions = visibleTools.map((_, index) => ({
-      x: (Math.random() - 0.5) * 200 + (index % 3 - 1) * 120,
-      y: (Math.random() - 0.5) * 100 + (Math.floor(index / 3) - 0.5) * 120,
-      rotation: (Math.random() - 0.5) * 20,
-      scale: 0.9 + Math.random() * 0.2,
-    }));
+    const positions = visibleTools.map((_, index) => {
+      const cols = 3;
+      const spacing = 160;
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+
+      return {
+        x: (col - 1) * spacing, // Center the grid
+        y: (row - 0.5) * 140,   // Center vertically
+        rotation: 0,
+        scale: 1,
+      };
+    });
     setCardPositions(positions);
   }, [visibleTools.length]);
 
-  // Mouse tracking for character reactions
+  // Mouse tracking for subtle character reactions
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+
         const x = (e.clientX - centerX) / (rect.width / 2);
         const y = (e.clientY - centerY) / (rect.height / 2);
-        
+
         setMousePosition({ x, y });
       }
     };
@@ -46,47 +53,6 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
       return () => container.removeEventListener('mousemove', handleMouseMove);
     }
   }, []);
-
-  // Character animation loop
-  useEffect(() => {
-    let time = 0;
-    const animate = () => {
-      time += 0.016;
-      
-      setCardPositions(prev => prev.map((pos, index) => {
-        // Breathing animation
-        const breathe = Math.sin(time * 2 + index * 0.5) * 0.05 + 1;
-        
-        // React to mouse - cards "look" at mouse
-        const mouseInfluence = 20;
-        const mouseX = mousePosition.x * mouseInfluence;
-        const mouseY = mousePosition.y * mouseInfluence;
-        
-        // Add some wandering behavior
-        const wander = {
-          x: Math.sin(time * 0.3 + index * 2) * 10,
-          y: Math.cos(time * 0.4 + index * 1.5) * 8,
-        };
-        
-        return {
-          ...pos,
-          x: pos.x + wander.x + mouseX * 0.1,
-          y: pos.y + wander.y + mouseY * 0.1,
-          rotation: pos.rotation + Math.sin(time + index) * 3,
-          scale: breathe * (0.9 + Math.random() * 0.1),
-        };
-      }));
-      
-      animationRef.current = requestAnimationFrame(animate);
-    };
-    
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [mousePosition]);
 
   // Get bouncy tool logo components
   const getBouncyToolLogo = (toolName: string) => {
