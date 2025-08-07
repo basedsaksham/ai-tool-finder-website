@@ -252,51 +252,52 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
                     : 'bg-white/25 border-white/30 hover:bg-white/35 hover:border-white/50'
                 }`}>
                   
-                  {/* Bouncy Tool Logo */}
-                  <div className={`mb-4 flex justify-center transition-all duration-500 ${
-                    highlightedTool === index ? 'animate-bounce scale-125' : ''
+                  {/* Compact Tool Logo */}
+                  <div className={`mb-2 flex justify-center transition-all duration-500 ${
+                    highlightedTool === index ? 'scale-110' : ''
                   }`}>
-                    {getBouncyToolLogo(tool.name)}
+                    <div className="scale-75">
+                      {getBouncyToolLogo(tool.name)}
+                    </div>
                   </div>
-                  
-                  {/* Tool Name with character personality */}
-                  <h3 className={`font-bold text-lg mb-2 text-center transition-all duration-500 ${
-                    highlightedTool === index 
-                      ? 'text-purple-800 text-xl animate-pulse' 
+
+                  {/* Tool Name */}
+                  <h3 className={`font-bold text-sm mb-1 text-center transition-all duration-500 ${
+                    highlightedTool === index
+                      ? 'text-purple-800 text-base'
                       : 'text-gray-800'
                   }`}>
                     {tool.name}
-                    {highlightedTool === index && <span className="ml-2 animate-bounce">!</span>}
                   </h3>
-                  
-                  {/* Category with emoji */}
-                  <p className={`text-sm mb-4 text-center transition-colors duration-500 ${
-                    highlightedTool === index ? 'text-purple-600 font-medium' : 'text-gray-600'
+
+                  {/* Category */}
+                  <p className={`text-xs mb-2 text-center transition-colors duration-500 ${
+                    highlightedTool === index ? 'text-purple-600' : 'text-gray-600'
                   }`}>
-                    ✨ {tool.category}
+                    {tool.category}
                   </p>
-                  
-                  {/* Playful Pricing Badge */}
-                  <div className="text-center mb-4">
-                    <div className={`inline-block px-4 py-2 rounded-full text-sm font-bold transition-all duration-500 transform ${
-                      tool.pricing.type === 'free' 
-                        ? 'bg-green-400/80 text-white shadow-lg shadow-green-400/40' :
-                      tool.pricing.type === 'freemium' 
-                        ? 'bg-blue-400/80 text-white shadow-lg shadow-blue-400/40' :
-                        'bg-orange-400/80 text-white shadow-lg shadow-orange-400/40'
-                    } ${highlightedTool === index ? 'scale-125 animate-pulse rotate-12' : 'hover:scale-110'}`}>
-                      {tool.pricing.type === 'free' ? '🎉 FREE' : 
-                       tool.pricing.type === 'freemium' ? '⚡ FREEMIUM' :
-                       `💰 $${tool.pricing.startingPrice}/mo`}
+
+                  {/* Compact Pricing Badge */}
+                  <div className="text-center mb-2">
+                    <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium transition-all duration-500 ${
+                      tool.pricing.type === 'free'
+                        ? 'bg-green-400/80 text-white' :
+                      tool.pricing.type === 'freemium'
+                        ? 'bg-blue-400/80 text-white' :
+                        'bg-orange-400/80 text-white'
+                    } ${highlightedTool === index ? 'scale-105' : ''}`}>
+                      {tool.pricing.type === 'free' ? 'FREE' :
+                       tool.pricing.type === 'freemium' ? 'FREEMIUM' :
+                       `$${tool.pricing.startingPrice}/mo`}
                     </div>
                   </div>
-                  
-                  {/* Rating with animated stars */}
-                  <div className={`flex items-center justify-center gap-2 transition-all duration-500 ${
-                    highlightedTool === index ? 'text-yellow-600 scale-125' : 'text-yellow-500'
+
+                  {/* Compact Rating */}
+                  <div className={`flex items-center justify-center gap-1 text-xs transition-all duration-500 ${
+                    highlightedTool === index ? 'text-yellow-600 scale-105' : 'text-yellow-500'
                   }`}>
-                    <span className={`text-lg ${highlightedTool === index ? 'animate-spin' : ''}`}>⭐</span>
-                    <span className="text-gray-700 font-semibold">{tool.rating}</span>
+                    <span>⭐</span>
+                    <span className="text-gray-700 font-medium">{tool.rating}</span>
                   </div>
                   
                   {/* Character expressions */}
