@@ -245,12 +245,12 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
                 onMouseLeave={() => setHighlightedTool(null)}
                 onClick={() => onToolClick?.(tool)}
               >
-                {/* Character card with squash & stretch */}
-                <div className={`relative w-48 h-56 p-5 rounded-3xl backdrop-blur-md border-2 transition-all duration-700 transform ${
-                  highlightedTool === index 
-                    ? 'bg-white/40 border-rainbow shadow-2xl shadow-rainbow/50 scale-110 -rotate-3 animate-bounce' 
-                    : 'bg-white/20 border-white/30 hover:bg-white/30 hover:border-white/50 hover:scale-105 hover:rotate-1'
-                } ${index % 2 === 0 ? 'animate-float' : 'animate-pulse'}`}>
+                {/* Compact interactive card */}
+                <div className={`relative w-36 h-44 p-4 rounded-2xl backdrop-blur-md border-2 transition-all duration-500 transform ${
+                  highlightedTool === index
+                    ? 'bg-white/50 border-white/60 shadow-xl shadow-white/30 scale-110'
+                    : 'bg-white/25 border-white/30 hover:bg-white/35 hover:border-white/50'
+                }`}>
                   
                   {/* Bouncy Tool Logo */}
                   <div className={`mb-4 flex justify-center transition-all duration-500 ${
