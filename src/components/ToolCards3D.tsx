@@ -17,7 +17,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   // Initialize horizontal row positions
   useEffect(() => {
     const positions = visibleTools.map((_, index) => {
-      const spacing = 100; // Horizontal spacing between cards
+      const spacing = 120; // Horizontal spacing between cards
 
       return {
         x: (index - 2.5) * spacing, // Center the row horizontally
