@@ -14,14 +14,14 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>();
 
-  // Initialize vertical column positions
+  // Initialize horizontal row positions
   useEffect(() => {
     const positions = visibleTools.map((_, index) => {
-      const spacing = 80; // Vertical spacing between cards
+      const spacing = 150; // Horizontal spacing between cards
 
       return {
-        x: 0, // All cards centered horizontally
-        y: (index - 2.5) * spacing, // Arrange in vertical column
+        x: (index - 2.5) * spacing, // Center the row horizontally
+        y: 0, // All cards in same row
         rotation: 0,
         scale: 1,
       };
