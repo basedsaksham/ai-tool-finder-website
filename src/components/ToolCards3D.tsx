@@ -51,7 +51,7 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
     }
   }, []);
 
-  // Get bouncy tool logo components
+  // Get official tool logo components with brand-accurate designs
   const getBouncyToolLogo = (toolName: string) => {
     const logoComponents: { [key: string]: JSX.Element } = {
       'ChatGPT': (
@@ -61,8 +61,29 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
             <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
               <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
             </svg>
-            {/* Bouncy eyes effect */}
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full opacity-80 group-hover:animate-bounce"></div>
+          </div>
+        </div>
+      ),
+      'Claude': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-orange-400/50 transform group-hover:rotate-12 transition-transform duration-300">
+            <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <div className="absolute -bottom-1 left-1 w-2 h-2 bg-yellow-400 rounded-full opacity-80 group-hover:animate-ping"></div>
+          </div>
+        </div>
+      ),
+      'Google Gemini': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/50 transform group-hover:-rotate-6 transition-transform duration-300">
+            <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <div className="absolute top-1 right-1 w-2 h-2 bg-yellow-300 rounded-full opacity-80 group-hover:animate-bounce"></div>
           </div>
         </div>
       ),
@@ -77,6 +98,26 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           </div>
         </div>
       ),
+      'DALL-E 3': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-teal-400 to-green-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-teal-400/50 transform group-hover:rotate-6 transition-transform duration-300">
+            <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+            </svg>
+            <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80 group-hover:animate-bounce"></div>
+          </div>
+        </div>
+      ),
+      'Stable Diffusion': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/50 transform group-hover:rotate-12 transition-transform duration-300">
+            <div className="text-white font-bold text-2xl drop-shadow-lg group-hover:scale-125 transition-transform duration-200">SD</div>
+            <div className="absolute top-1 left-1 w-2 h-2 bg-cyan-300 rounded-full opacity-80 group-hover:animate-ping"></div>
+          </div>
+        </div>
+      ),
       'GitHub Copilot': (
         <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
           <div className="absolute inset-0 bg-gray-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
@@ -85,6 +126,17 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
               <path d="M12 0c6.63 0 12 5.37 12 12 0 5.31-3.44 9.82-8.2 11.4-.6-.55-.93-1.33-.93-2.2v-1.96c0-.67-.23-1.14-.69-1.4 2.24-.25 4.6-1.1 4.6-4.97 0-1.1-.39-2-.73-2.62.1-.25.32-1.29-.09-2.69 0 0-.84-.27-2.75 1.02-.8-.22-1.65-.33-2.5-.33-.85 0-1.7.11-2.5.33C8.82 8.43 7.98 8.7 7.98 8.7c-.41 1.4-.19 2.44-.09 2.69-.73.62-.73 1.52-.73 2.62 0 3.86 2.35 4.72 4.58 4.97-.29.25-.54.69-.63 1.34-.57.26-2.01.69-2.91-.83 0 0-.53-.96-1.53-1.03 0 0-.98-.01-.07.61 0 0 .65.31 1.1 1.46 0 0 .59 1.78 3.36 1.18v1.85c0 .87-.33 1.65-.93 2.2C3.44 21.82 0 17.31 0 12 0 5.37 5.37 0 12 0z"/>
             </svg>
             <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-green-400 rounded-full opacity-80 group-hover:animate-bounce"></div>
+          </div>
+        </div>
+      ),
+      'Cursor': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-600/50 transform group-hover:-rotate-6 transition-transform duration-300">
+            <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <path d="M8.11 4.03L12 7.93L15.89 4.03L18 6.14L14.11 10.04L18 13.94L15.89 16.05L12 12.15L8.11 16.05L6 13.94L9.89 10.04L6 6.14L8.11 4.03Z"/>
+            </svg>
+            <div className="absolute top-1 right-1 w-2 h-2 bg-cyan-300 rounded-full opacity-80 group-hover:animate-ping"></div>
           </div>
         </div>
       ),
@@ -97,6 +149,17 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           </div>
         </div>
       ),
+      'Synthesia': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-purple-500/50 transform group-hover:-rotate-12 transition-transform duration-300">
+            <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <div className="absolute -bottom-1 left-1 w-2 h-2 bg-yellow-300 rounded-full opacity-80 group-hover:animate-bounce"></div>
+          </div>
+        </div>
+      ),
       'Notion AI': (
         <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
           <div className="absolute inset-0 bg-gray-300 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
@@ -106,12 +169,39 @@ const ToolCards3D = ({ tools, onToolClick }: ToolCards3DProps) => {
           </div>
         </div>
       ),
-      'Claude': (
+      'Otter.ai': (
         <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
-          <div className="relative w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-orange-400/50 transform group-hover:rotate-12 transition-transform duration-300">
-            <div className="text-white font-bold text-3xl drop-shadow-lg group-hover:scale-125 transition-transform duration-200">C</div>
-            <div className="absolute -bottom-1 left-1 w-2 h-2 bg-yellow-400 rounded-full opacity-80 group-hover:animate-ping"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/50 transform group-hover:rotate-6 transition-transform duration-300">
+            <div className="text-white text-2xl drop-shadow-lg group-hover:scale-125 transition-transform duration-200">🦦</div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80 group-hover:animate-ping"></div>
+          </div>
+        </div>
+      ),
+      'Grammarly': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-green-500/50 transform group-hover:-rotate-6 transition-transform duration-300">
+            <div className="text-white font-bold text-3xl drop-shadow-lg group-hover:scale-125 transition-transform duration-200">G</div>
+            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-white rounded-full opacity-80 group-hover:animate-bounce"></div>
+          </div>
+        </div>
+      ),
+      'Perplexity AI': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-purple-600/50 transform group-hover:rotate-12 transition-transform duration-300">
+            <div className="text-white font-bold text-2xl drop-shadow-lg group-hover:scale-125 transition-transform duration-200">⊥</div>
+            <div className="absolute top-1 left-1 w-2 h-2 bg-cyan-300 rounded-full opacity-80 group-hover:animate-ping"></div>
+          </div>
+        </div>
+      ),
+      'Jasper AI': (
+        <div className="relative w-16 h-16 group transform transition-all duration-300 hover:scale-110">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-700 rounded-2xl blur-lg opacity-60 group-hover:opacity-80 animate-pulse"></div>
+          <div className="relative w-16 h-16 bg-gradient-to-br from-purple-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-2xl shadow-purple-600/50 transform group-hover:-rotate-6 transition-transform duration-300">
+            <div className="text-white font-bold text-3xl drop-shadow-lg group-hover:scale-125 transition-transform duration-200">J</div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-pink-300 rounded-full opacity-80 group-hover:animate-bounce"></div>
           </div>
         </div>
       )
