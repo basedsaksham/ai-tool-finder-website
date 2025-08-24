@@ -2,7 +2,7 @@ import { AITool } from "@/types/tool";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ExternalLink, TrendingUp, Heart } from "lucide-react";
+import { Star, ExternalLink, TrendingUp, Heart, Check } from "lucide-react";
 
 interface ToolCardProps {
   tool: AITool;
