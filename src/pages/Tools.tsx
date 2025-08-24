@@ -115,7 +115,7 @@ const Tools = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Filters */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-4 max-h-[calc(100vh-6rem)] flex flex-col">
+            <div className="sticky top-24 space-y-4 h-[calc(100vh-7rem)] flex flex-col">
               {/* Search - Fixed */}
               <div className="relative flex-shrink-0">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
