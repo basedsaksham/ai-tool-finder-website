@@ -128,7 +128,7 @@ const Tools = () => {
               </div>
 
               {/* Filters - Scrollable with custom scrollbar */}
-              <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border hover:scrollbar-thumb-muted-foreground scrollbar-thumb-rounded-full">
+              <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin">
                 <CategoryFilter
                   selectedCategory={filters.category}
                   onCategoryChange={(category) => updateFilters('category', category)}
