@@ -141,6 +141,8 @@ export default {
 		function({ addUtilities }) {
 			const newUtilities = {
 				'.scrollbar-thin': {
+					'scrollbar-width': 'thin',
+					'scrollbar-color': 'hsl(var(--border)) transparent',
 					'&::-webkit-scrollbar': {
 						width: '6px',
 					},
@@ -150,9 +152,9 @@ export default {
 					'&::-webkit-scrollbar-thumb': {
 						background: 'hsl(var(--border))',
 						borderRadius: '6px',
-					},
-					'&::-webkit-scrollbar-thumb:hover': {
-						background: 'hsl(var(--muted-foreground))',
+						'&:hover': {
+							background: 'hsl(var(--muted-foreground))',
+						},
 					},
 				},
 				'.scrollbar-track-transparent': {
