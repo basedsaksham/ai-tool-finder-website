@@ -53,9 +53,20 @@ const Compare = () => {
   });
 
   const addTool = (tool: AITool) => {
-    if (selectedTools.length < 3) {
-      setSelectedTools([...selectedTools, tool]);
+    if (selectedTools.length >= 3) {
+      toast({
+        title: "Maximum tools reached",
+        description: "You can compare up to 3 tools at once. Remove a tool to add another.",
+        variant: "destructive",
+      });
+      return;
     }
+
+    setSelectedTools([...selectedTools, tool]);
+    toast({
+      title: "Tool added to comparison",
+      description: `${tool.name} has been added to your comparison.`,
+    });
   };
 
   const removeTool = (toolId: string) => {
