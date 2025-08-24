@@ -27,9 +27,13 @@ const ToolCard = ({ tool, onCompare, isComparing }: ToolCardProps) => {
   };
 
   return (
-    <Card className="group relative overflow-hidden border-border bg-card hover:shadow-glow transition-all duration-300 hover:-translate-y-2 hover:scale-105"
+    <Card className={`group relative overflow-hidden border-border bg-card hover:shadow-glow transition-all duration-300 hover:-translate-y-2 hover:scale-105 ${
+      isComparing ? 'ring-2 ring-primary border-primary/50 shadow-glow' : ''
+    }`}
       style={{
-        background: 'linear-gradient(145deg, hsl(var(--card)), hsl(var(--card)/0.95))',
+        background: isComparing
+          ? 'linear-gradient(145deg, hsl(var(--primary)/0.05), hsl(var(--card)/0.95))'
+          : 'linear-gradient(145deg, hsl(var(--card)), hsl(var(--card)/0.95))',
         backdropFilter: 'blur(8px)'
       }}
     >
