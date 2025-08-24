@@ -12,6 +12,7 @@ import { Search, X, ArrowRight, GitCompare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Tools = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<SearchFilters>({
     sortBy: 'popularity'
