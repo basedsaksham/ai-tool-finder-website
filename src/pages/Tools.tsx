@@ -115,7 +115,7 @@ const Tools = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Filters */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
+            <div className="sticky top-24 space-y-6 max-h-[calc(100vh-8rem)] overflow-hidden">
               {/* Search */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -127,21 +127,23 @@ const Tools = () => {
                 />
               </div>
 
-              {/* Filters */}
-              <CategoryFilter
-                selectedCategory={filters.category}
-                onCategoryChange={(category) => updateFilters('category', category)}
-                selectedPricing={filters.pricing || []}
-                onPricingChange={(pricing) => updateFilters('pricing', pricing)}
-                selectedPlatforms={filters.platforms || []}
-                onPlatformChange={(platforms) => updateFilters('platforms', platforms)}
-                toolCount={filteredTools.length}
-              />
+              {/* Filters - Scrollable */}
+              <div className="overflow-y-auto flex-1">
+                <CategoryFilter
+                  selectedCategory={filters.category}
+                  onCategoryChange={(category) => updateFilters('category', category)}
+                  selectedPricing={filters.pricing || []}
+                  onPricingChange={(pricing) => updateFilters('pricing', pricing)}
+                  selectedPlatforms={filters.platforms || []}
+                  onPlatformChange={(platforms) => updateFilters('platforms', platforms)}
+                  toolCount={filteredTools.length}
+                />
+              </div>
             </div>
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 relative">
             <ToolGrid
               tools={filteredTools}
               onCompare={handleCompare}
@@ -153,6 +155,56 @@ const Tools = () => {
             />
           </div>
         </div>
+
+        {/* Comparison Toolbar - Sticky Bottom */}
+        {comparingTools.length > 0 && (
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-4xl px-4">
+            <Card className="bg-card/95 backdrop-blur-lg border-2 border-primary/20 shadow-2xl">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      <GitCompare className="w-5 h-5 text-primary" />
+                      <span className="font-semibold text-sm">Compare Tools</span>
+                      <Badge variant="secondary" className="bg-primary/10 text-primary">
+                        {comparingTools.length}/3
+                      </Badge>
+                    </div>
+                    <div className="flex gap-2">
+                      {comparingTools.map(tool => (
+                        <div key={tool.id} className="flex items-center gap-1 bg-secondary/50 px-2 py-1 rounded-md">
+                          <span className="text-xs font-medium truncate max-w-20">{tool.name}</span>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => removeFromComparison(tool.id)}
+                            className="h-4 w-4 p-0 hover:bg-destructive/20"
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={clearComparison}>
+                      Clear All
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={goToComparePage}
+                      className="bg-gradient-primary hover:opacity-90"
+                      disabled={comparingTools.length < 2}
+                    >
+                      Compare Now
+                      <ArrowRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );
