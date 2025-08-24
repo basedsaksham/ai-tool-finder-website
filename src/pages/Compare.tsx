@@ -172,23 +172,51 @@ const Compare = () => {
               </div>
             </div>
 
-            {searchQuery && filteredTools.length > 0 && selectedTools.length < 3 && (
+            {/* Always show add tools section when less than 3 tools are selected */}
+            {selectedTools.length < 3 && (
               <div className="mb-6">
-                <h3 className="text-sm font-medium mb-2">Add to comparison:</h3>
-                <div className="flex gap-2 flex-wrap">
-                  {filteredTools.slice(0, 5).map(tool => (
-                    <Button
-                      key={tool.id}
-                      variant="outline"
-                      size="sm"
-                      onClick={() => addTool(tool)}
-                      className="text-sm"
-                    >
-                      <Plus className="w-3 h-3 mr-1" />
-                      {tool.name}
-                    </Button>
-                  ))}
-                </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Plus className="w-5 h-5" />
+                      Add More Tools to Compare
+                      <Badge variant="secondary" className="ml-auto">
+                        {selectedTools.length}/3 selected
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {filteredTools.length > 0 ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+                        {filteredTools.slice(0, 12).map(tool => (
+                          <Card key={tool.id} className="cursor-pointer hover:shadow-md transition-shadow border-dashed hover:border-solid hover:border-primary/50"
+                            onClick={() => addTool(tool)}>
+                            <CardContent className="p-4">
+                              <div className="flex items-start justify-between mb-2">
+                                <h3 className="font-semibold text-sm">{tool.name}</h3>
+                                <Plus className="w-4 h-4 text-primary" />
+                              </div>
+                              <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{tool.shortDescription}</p>
+                              <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1">
+                                  <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                  <span className="text-xs">{tool.rating}</span>
+                                </div>
+                                <Badge variant="outline" className="text-xs">{tool.category}</Badge>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <Search className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                        <p>No tools found matching your search criteria.</p>
+                        <p className="text-sm">Try adjusting your search or category filter.</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               </div>
             )}
 
