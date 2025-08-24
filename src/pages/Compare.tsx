@@ -81,64 +81,86 @@ const Compare = () => {
           </p>
         </div>
 
-        {selectedTools.length === 0 && (
-          <div className="mb-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Search className="w-5 h-5" />
-                  Search Tools to Compare
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex gap-4">
-                  <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                    <Input
-                      placeholder="Search tools..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                  <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger className="w-[200px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      {categories.map(cat => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+        {/* Search and Filter Controls - Always Visible */}
+        <div className="mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Search className="w-5 h-5" />
+                {selectedTools.length === 0 ? 'Select Tools to Compare' : 'Add More Tools'}
+                <Badge variant="secondary" className="ml-auto">
+                  {selectedTools.length}/3 selected
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex gap-4">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <Input
+                    placeholder="Search tools..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    {categories.map(cat => (
+                      <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Show available tools if less than 3 are selected */}
+              {selectedTools.length < 3 && (
+                <>
+                  {filteredTools.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+                      {filteredTools.slice(0, 12).map(tool => (
+                        <Card key={tool.id} className="cursor-pointer hover:shadow-md transition-all duration-200 border-dashed hover:border-solid hover:border-primary/50 hover:bg-primary/5"
+                          onClick={() => addTool(tool)}>
+                          <CardContent className="p-4">
+                            <div className="flex items-start justify-between mb-2">
+                              <h3 className="font-semibold text-sm">{tool.name}</h3>
+                              <Plus className="w-4 h-4 text-primary" />
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{tool.shortDescription}</p>
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-1">
+                                <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                <span className="text-xs">{tool.rating}</span>
+                              </div>
+                              <Badge variant="outline" className="text-xs">{tool.category}</Badge>
+                            </div>
+                          </CardContent>
+                        </Card>
                       ))}
-                    </SelectContent>
-                  </Select>
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Search className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p>No tools found matching your search criteria.</p>
+                      <p className="text-sm">Try adjusting your search or category filter.</p>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {selectedTools.length === 3 && (
+                <div className="text-center py-4 text-muted-foreground">
+                  <p className="font-medium">Maximum of 3 tools reached</p>
+                  <p className="text-sm">Remove a tool below to add a different one.</p>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-                  {filteredTools.slice(0, 12).map(tool => (
-                    <Card key={tool.id} className="cursor-pointer hover:shadow-md transition-shadow"
-                      onClick={() => addTool(tool)}>
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="font-semibold">{tool.name}</h3>
-                          <Plus className="w-4 h-4 text-muted-foreground" />
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-2">{tool.shortDescription}</p>
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1">
-                            <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                            <span className="text-xs">{tool.rating}</span>
-                          </div>
-                          <Badge variant="outline" className="text-xs">{tool.category}</Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
         {selectedTools.length > 0 && (
           <>
