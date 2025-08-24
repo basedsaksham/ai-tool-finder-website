@@ -70,7 +70,15 @@ const Compare = () => {
   };
 
   const removeTool = (toolId: string) => {
+    const toolToRemove = selectedTools.find(t => t.id === toolId);
     setSelectedTools(selectedTools.filter(t => t.id !== toolId));
+
+    if (toolToRemove) {
+      toast({
+        title: "Tool removed",
+        description: `${toolToRemove.name} has been removed from comparison.`,
+      });
+    }
   };
 
   const getPricingDisplay = (tool: AITool) => {
