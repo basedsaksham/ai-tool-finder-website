@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 
 const Compare = () => {
+  const { toast } = useToast();
   const [selectedTools, setSelectedTools] = useState<AITool[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
