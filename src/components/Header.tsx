@@ -22,7 +22,7 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => window.location.href = '/submit-tool'}>
             Submit Tool
           </Button>
           <Button size="sm" className="bg-gradient-primary hover:opacity-90">
