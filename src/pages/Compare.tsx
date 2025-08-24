@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { mockTools } from "@/data/mockTools";
 import { AITool } from "@/types/tool";
 import Header from "@/components/Header";
