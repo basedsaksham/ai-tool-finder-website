@@ -5,7 +5,11 @@ import Header from "@/components/Header";
 import CategoryFilter from "@/components/CategoryFilter";
 import ToolGrid from "@/components/ToolGrid";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Search, X, ArrowRight, GitCompare } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Tools = () => {
   const [searchQuery, setSearchQuery] = useState("");
