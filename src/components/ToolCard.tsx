@@ -111,18 +111,26 @@ const ToolCard = ({ tool, onCompare, isComparing }: ToolCardProps) => {
       </CardContent>
 
       <CardFooter className="pt-0 flex gap-2">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="flex-1"
+        <Button
+          variant={isComparing ? "default" : "outline"}
+          size="sm"
+          className={`flex-1 ${isComparing ? 'bg-primary text-primary-foreground' : ''}`}
           onClick={() => onCompare?.(tool)}
-          disabled={isComparing}
         >
-          <Heart className="w-4 h-4 mr-2" />
-          {isComparing ? 'Comparing' : 'Compare'}
+          {isComparing ? (
+            <>
+              <Check className="w-4 h-4 mr-2" />
+              Selected
+            </>
+          ) : (
+            <>
+              <Heart className="w-4 h-4 mr-2" />
+              Compare
+            </>
+          )}
         </Button>
-        <Button 
-          size="sm" 
+        <Button
+          size="sm"
           className="flex-1 bg-gradient-primary hover:opacity-90"
           onClick={() => window.open(tool.website, '_blank')}
         >
