@@ -130,7 +130,14 @@ const Compare = () => {
                               <h3 className="font-semibold text-sm">{tool.name}</h3>
                               <Plus className="w-4 h-4 text-primary" />
                             </div>
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2 overflow-hidden">{tool.shortDescription}</p>
+                            <p className="text-xs text-muted-foreground mb-2 overflow-hidden"
+                               style={{
+                                 display: '-webkit-box',
+                                 WebkitLineClamp: 2,
+                                 WebkitBoxOrient: 'vertical'
+                               }}>
+                              {tool.shortDescription}
+                            </p>
                             <div className="flex items-center gap-2">
                               <div className="flex items-center gap-1">
                                 <Star className="w-3 h-3 text-yellow-400 fill-current" />
