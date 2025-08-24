@@ -136,5 +136,48 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function({ addUtilities }) {
+			const newUtilities = {
+				'.scrollbar-thin': {
+					'&::-webkit-scrollbar': {
+						width: '6px',
+					},
+					'&::-webkit-scrollbar-track': {
+						background: 'transparent',
+					},
+					'&::-webkit-scrollbar-thumb': {
+						background: 'hsl(var(--border))',
+						borderRadius: '6px',
+					},
+					'&::-webkit-scrollbar-thumb:hover': {
+						background: 'hsl(var(--muted-foreground))',
+					},
+				},
+				'.scrollbar-track-transparent': {
+					'&::-webkit-scrollbar-track': {
+						background: 'transparent',
+					},
+				},
+				'.scrollbar-thumb-border': {
+					'&::-webkit-scrollbar-thumb': {
+						background: 'hsl(var(--border))',
+						borderRadius: '6px',
+					},
+				},
+				'.scrollbar-thumb-muted-foreground': {
+					'&::-webkit-scrollbar-thumb:hover': {
+						background: 'hsl(var(--muted-foreground))',
+					},
+				},
+				'.scrollbar-thumb-rounded-full': {
+					'&::-webkit-scrollbar-thumb': {
+						borderRadius: '9999px',
+					},
+				},
+			};
+			addUtilities(newUtilities);
+		}
+	],
 } satisfies Config;
