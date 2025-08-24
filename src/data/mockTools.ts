@@ -3224,5 +3224,1001 @@ export const mockTools: AITool[] = [
       "Marketing automation"
     ],
     tags: ["Sales", "Marketing", "Lead Generation", "Conversation", "Revenue"]
+  },
+
+  // NEWLY ADDED TOOLS
+  {
+    id: "gumloop",
+    name: "Gumloop",
+    description: "Best AI automation platform for creating complex workflows and automating business processes with ease.",
+    shortDescription: "Best for AI automations and workflow creation",
+    category: "Productivity",
+    subcategory: "Automation",
+    website: "https://gumloop.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 29,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Visual workflow builder",
+      "AI-powered automation",
+      "API integrations",
+      "Conditional logic",
+      "Real-time monitoring"
+    ],
+    platforms: ["web", "api"],
+    rating: 4.7,
+    reviewCount: 1240,
+    pros: [
+      "Best-in-class automation",
+      "Easy visual interface",
+      "Powerful AI features"
+    ],
+    cons: [
+      "Learning curve for complex flows",
+      "Premium pricing",
+      "Limited free tier"
+    ],
+    useCases: [
+      "Business process automation",
+      "Workflow optimization",
+      "Data processing",
+      "API orchestration",
+      "Task automation"
+    ],
+    tags: ["Automation", "Workflows", "AI", "Business Process", "Integration"],
+    isTrending: true
+  },
+  {
+    id: "surfer-seo",
+    name: "Surfer SEO",
+    description: "AI-powered SEO tool for content optimization that helps improve search rankings through data-driven insights.",
+    shortDescription: "For content optimization and SEO improvement",
+    category: "Marketing",
+    subcategory: "SEO",
+    website: "https://surferseo.com",
+    pricing: {
+      type: "paid",
+      startingPrice: 59,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Content optimization",
+      "SERP analysis",
+      "Keyword research",
+      "Content editor",
+      "Rank tracking"
+    ],
+    platforms: ["web", "browser"],
+    rating: 4.6,
+    reviewCount: 2850,
+    pros: [
+      "Excellent SEO insights",
+      "Data-driven optimization",
+      "Easy to use interface"
+    ],
+    cons: [
+      "Expensive for individuals",
+      "Requires SEO knowledge",
+      "Limited free features"
+    ],
+    useCases: [
+      "Content optimization",
+      "SEO strategy",
+      "Keyword research",
+      "SERP analysis",
+      "Content marketing"
+    ],
+    tags: ["SEO", "Content", "Optimization", "Marketing", "SERP"],
+    isPopular: true
+  },
+  {
+    id: "lexica-art",
+    name: "Lexica Art",
+    description: "AI art generator specialized in creating stunning blog thumbnails and visual content with artistic flair.",
+    shortDescription: "For blog thumbnails and artistic image generation",
+    category: "Image & Design",
+    subcategory: "Image Generation",
+    website: "https://lexica.art",
+    pricing: {
+      type: "freemium",
+      startingPrice: 10,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "AI art generation",
+      "Style variations",
+      "High-resolution outputs",
+      "Thumbnail optimization",
+      "Artistic filters"
+    ],
+    platforms: ["web"],
+    rating: 4.4,
+    reviewCount: 3200,
+    pros: [
+      "Great for thumbnails",
+      "Artistic quality",
+      "Easy to use"
+    ],
+    cons: [
+      "Limited style control",
+      "Subscription required",
+      "Basic editing features"
+    ],
+    useCases: [
+      "Blog thumbnails",
+      "Social media graphics",
+      "Art creation",
+      "Visual content",
+      "Creative projects"
+    ],
+    tags: ["Art", "Thumbnails", "Blog", "Visual", "Creative"]
+  },
+  {
+    id: "lalal-ai",
+    name: "LALAL.AI",
+    description: "AI-powered audio separation tool that removes vocals, instruments, and background noise from audio recordings.",
+    shortDescription: "For audio recordings and vocal separation",
+    category: "Music & Audio",
+    subcategory: "Audio Processing",
+    website: "https://lalal.ai",
+    pricing: {
+      type: "freemium",
+      startingPrice: 15,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Vocal removal",
+      "Instrument separation",
+      "Noise reduction",
+      "High-quality processing",
+      "Batch processing"
+    ],
+    platforms: ["web"],
+    rating: 4.5,
+    reviewCount: 8900,
+    pros: [
+      "Excellent audio quality",
+      "Fast processing",
+      "Multiple separation options"
+    ],
+    cons: [
+      "Limited free usage",
+      "Processing time varies",
+      "Subscription required"
+    ],
+    useCases: [
+      "Audio editing",
+      "Karaoke creation",
+      "Music production",
+      "Podcast editing",
+      "Audio cleanup"
+    ],
+    tags: ["Audio", "Vocal Removal", "Music", "Separation", "Processing"]
+  },
+  {
+    id: "crayo",
+    name: "Crayo",
+    description: "AI-powered platform for creating engaging short-form videos optimized for social media platforms.",
+    shortDescription: "For short-form videos and social content",
+    category: "Video & Media",
+    subcategory: "Video Creation",
+    website: "https://crayo.ai",
+    pricing: {
+      type: "freemium",
+      startingPrice: 20,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Short-form video creation",
+      "AI script generation",
+      "Auto-captioning",
+      "Social media optimization",
+      "Template library"
+    ],
+    platforms: ["web", "mobile"],
+    rating: 4.3,
+    reviewCount: 1650,
+    pros: [
+      "Perfect for social media",
+      "Easy video creation",
+      "Good templates"
+    ],
+    cons: [
+      "Limited customization",
+      "Subscription required",
+      "Basic editing tools"
+    ],
+    useCases: [
+      "Social media videos",
+      "TikTok content",
+      "Instagram reels",
+      "YouTube shorts",
+      "Marketing videos"
+    ],
+    tags: ["Short-form", "Social Media", "TikTok", "Video", "Content"]
+  },
+  {
+    id: "brandwell",
+    name: "Brandwell",
+    description: "AI content generator specialized in creating SEO-optimized blog posts and marketing content for brands.",
+    shortDescription: "For generating SEO blog posts and brand content",
+    category: "Text & Writing",
+    subcategory: "Content Creation",
+    website: "https://brandwell.ai",
+    pricing: {
+      type: "paid",
+      startingPrice: 39,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "SEO blog generation",
+      "Brand voice training",
+      "Content optimization",
+      "Keyword integration",
+      "Publishing workflow"
+    ],
+    platforms: ["web", "api"],
+    rating: 4.4,
+    reviewCount: 890,
+    pros: [
+      "Excellent SEO features",
+      "Brand consistency",
+      "Professional quality"
+    ],
+    cons: [
+      "Expensive pricing",
+      "Learning curve",
+      "Requires SEO knowledge"
+    ],
+    useCases: [
+      "SEO blog writing",
+      "Content marketing",
+      "Brand content",
+      "Website content",
+      "Marketing campaigns"
+    ],
+    tags: ["SEO", "Blog", "Brand", "Content", "Marketing"]
+  },
+  {
+    id: "originality-ai",
+    name: "Originality AI",
+    description: "AI content detection tool that identifies AI-generated text and checks for plagiarism in written content.",
+    shortDescription: "For AI content detection and plagiarism checking",
+    category: "Text & Writing",
+    subcategory: "Content Analysis",
+    website: "https://originality.ai",
+    pricing: {
+      type: "paid",
+      startingPrice: 14.95,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "AI content detection",
+      "Plagiarism checking",
+      "Content scoring",
+      "Batch analysis",
+      "API integration"
+    ],
+    platforms: ["web", "api", "browser"],
+    rating: 4.2,
+    reviewCount: 1560,
+    pros: [
+      "Accurate AI detection",
+      "Comprehensive analysis",
+      "Professional reports"
+    ],
+    cons: [
+      "Subscription required",
+      "Limited free usage",
+      "Can have false positives"
+    ],
+    useCases: [
+      "Content verification",
+      "Academic integrity",
+      "Quality assurance",
+      "SEO compliance",
+      "Editorial review"
+    ],
+    tags: ["AI Detection", "Plagiarism", "Content", "Verification", "Quality"]
+  },
+  {
+    id: "writer-com",
+    name: "Writer.com",
+    description: "AI writing platform designed for teams to create consistent, on-brand content at scale with collaboration features.",
+    shortDescription: "Content writing for teams with brand consistency",
+    category: "Text & Writing",
+    subcategory: "Team Writing",
+    website: "https://writer.com",
+    pricing: {
+      type: "paid",
+      startingPrice: 18,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Team collaboration",
+      "Brand voice training",
+      "Content governance",
+      "Writing analytics",
+      "Integration suite"
+    ],
+    platforms: ["web", "api", "browser"],
+    rating: 4.5,
+    reviewCount: 2340,
+    pros: [
+      "Excellent for teams",
+      "Strong brand features",
+      "Good collaboration tools"
+    ],
+    cons: [
+      "Enterprise focused",
+      "Expensive for small teams",
+      "Complex setup"
+    ],
+    useCases: [
+      "Team content creation",
+      "Brand consistency",
+      "Content governance",
+      "Marketing teams",
+      "Enterprise writing"
+    ],
+    tags: ["Team", "Brand", "Collaboration", "Enterprise", "Content"]
+  },
+  {
+    id: "undetectable-ai",
+    name: "Undetectable AI",
+    description: "AI tool that rewrites AI-generated content to make it undetectable by AI detection systems while maintaining quality.",
+    shortDescription: "For rewriting AI content to avoid detection",
+    category: "Text & Writing",
+    subcategory: "Content Rewriting",
+    website: "https://undetectable.ai",
+    pricing: {
+      type: "freemium",
+      startingPrice: 9.99,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "AI content rewriting",
+      "Detection bypass",
+      "Quality preservation",
+      "Multiple rewrite modes",
+      "Bulk processing"
+    ],
+    platforms: ["web", "api"],
+    rating: 4.1,
+    reviewCount: 3200,
+    pros: [
+      "Effective detection bypass",
+      "Maintains content quality",
+      "Easy to use"
+    ],
+    cons: [
+      "Ethical concerns",
+      "May alter meaning",
+      "Limited free tier"
+    ],
+    useCases: [
+      "Content rewriting",
+      "Academic writing",
+      "Content optimization",
+      "Publishing",
+      "Content creation"
+    ],
+    tags: ["Rewriting", "AI Bypass", "Content", "Detection", "Quality"]
+  },
+  {
+    id: "contentshake-ai",
+    name: "ContentShake AI",
+    description: "AI-powered SEO blog writing tool that creates optimized content to improve search engine rankings.",
+    shortDescription: "For SEO blog writing and content optimization",
+    category: "Text & Writing",
+    subcategory: "SEO Writing",
+    website: "https://contentshake.semrush.com",
+    pricing: {
+      type: "paid",
+      startingPrice: 60,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "SEO-optimized writing",
+      "Keyword integration",
+      "Content ideas",
+      "Competition analysis",
+      "Publishing integration"
+    ],
+    platforms: ["web"],
+    rating: 4.3,
+    reviewCount: 1450,
+    pros: [
+      "Strong SEO focus",
+      "Semrush integration",
+      "Data-driven insights"
+    ],
+    cons: [
+      "Expensive pricing",
+      "Requires SEO knowledge",
+      "Limited creativity"
+    ],
+    useCases: [
+      "SEO blog writing",
+      "Content marketing",
+      "Keyword optimization",
+      "Search ranking",
+      "Content strategy"
+    ],
+    tags: ["SEO", "Blog", "Content", "Semrush", "Optimization"]
+  },
+  {
+    id: "fullstory",
+    name: "FullStory",
+    description: "AI-powered digital experience analytics platform that captures and analyzes user behavior on websites and apps.",
+    shortDescription: "For digital experiences and user behavior analytics",
+    category: "Analytics",
+    subcategory: "User Analytics",
+    website: "https://fullstory.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 39,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Session recording",
+      "User behavior analysis",
+      "Heatmaps",
+      "Funnel analysis",
+      "AI insights"
+    ],
+    platforms: ["web"],
+    rating: 4.6,
+    reviewCount: 5600,
+    pros: [
+      "Comprehensive analytics",
+      "Excellent user insights",
+      "Professional features"
+    ],
+    cons: [
+      "Expensive for small sites",
+      "Complex setup",
+      "Privacy considerations"
+    ],
+    useCases: [
+      "User experience optimization",
+      "Conversion analysis",
+      "Behavior tracking",
+      "Product analytics",
+      "Website optimization"
+    ],
+    tags: ["Analytics", "UX", "Behavior", "Conversion", "Insights"]
+  },
+  {
+    id: "zapier",
+    name: "Zapier",
+    description: "Automation platform that connects apps and automates workflows without coding, making task automation accessible to everyone.",
+    shortDescription: "For automating tasks and connecting apps",
+    category: "Productivity",
+    subcategory: "Automation",
+    website: "https://zapier.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 19.99,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "App integrations",
+      "Workflow automation",
+      "Trigger-based actions",
+      "Multi-step workflows",
+      "API connections"
+    ],
+    platforms: ["web", "api"],
+    rating: 4.5,
+    reviewCount: 25000,
+    pros: [
+      "Huge app ecosystem",
+      "No coding required",
+      "Reliable automation"
+    ],
+    cons: [
+      "Can get expensive",
+      "Learning curve",
+      "Limited customization"
+    ],
+    useCases: [
+      "Task automation",
+      "App integration",
+      "Workflow optimization",
+      "Data synchronization",
+      "Business automation"
+    ],
+    tags: ["Automation", "Integration", "Workflow", "Apps", "Productivity"],
+    isPopular: true
+  },
+  {
+    id: "hemingway-app",
+    name: "Hemingway App",
+    description: "AI-powered writing editor that improves content clarity and readability by highlighting complex sentences and suggesting improvements.",
+    shortDescription: "For content editing and writing clarity",
+    category: "Text & Writing",
+    subcategory: "Writing Assistant",
+    website: "https://hemingwayapp.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 19.99,
+      currency: "USD",
+      billingPeriod: "one-time"
+    },
+    features: [
+      "Readability analysis",
+      "Sentence complexity",
+      "Writing suggestions",
+      "Grade level scoring",
+      "Style improvements"
+    ],
+    platforms: ["web", "desktop"],
+    rating: 4.4,
+    reviewCount: 8900,
+    pros: [
+      "Improves clarity",
+      "Simple interface",
+      "One-time purchase option"
+    ],
+    cons: [
+      "Limited AI features",
+      "Basic functionality",
+      "No grammar checking"
+    ],
+    useCases: [
+      "Content editing",
+      "Writing improvement",
+      "Readability optimization",
+      "Blog editing",
+      "Academic writing"
+    ],
+    tags: ["Writing", "Editing", "Clarity", "Readability", "Style"]
+  },
+  {
+    id: "chatfuel",
+    name: "Chatfuel",
+    description: "AI chatbot platform for creating intelligent conversational bots for customer service and marketing automation.",
+    shortDescription: "For chatbots and conversational AI",
+    category: "Customer Service",
+    subcategory: "Chatbots",
+    website: "https://chatfuel.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 15,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "AI chatbot builder",
+      "Natural language processing",
+      "Multi-platform support",
+      "Analytics dashboard",
+      "Integration options"
+    ],
+    platforms: ["web", "mobile"],
+    rating: 4.2,
+    reviewCount: 4500,
+    pros: [
+      "Easy bot creation",
+      "Good AI capabilities",
+      "Multi-platform support"
+    ],
+    cons: [
+      "Limited customization",
+      "Pricing can scale up",
+      "Learning curve"
+    ],
+    useCases: [
+      "Customer support",
+      "Lead generation",
+      "Marketing automation",
+      "FAQ handling",
+      "User engagement"
+    ],
+    tags: ["Chatbot", "AI", "Customer Service", "Automation", "Conversation"]
+  },
+  {
+    id: "albert-ai",
+    name: "Albert.ai",
+    description: "AI-powered digital advertising platform that optimizes ad campaigns across multiple channels for maximum ROI.",
+    shortDescription: "For digital advertising and campaign optimization",
+    category: "Marketing",
+    subcategory: "Digital Advertising",
+    website: "https://albert.ai",
+    pricing: {
+      type: "enterprise",
+      startingPrice: 5000,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Campaign optimization",
+      "Cross-channel advertising",
+      "AI bidding",
+      "Performance analytics",
+      "Budget allocation"
+    ],
+    platforms: ["web"],
+    rating: 4.3,
+    reviewCount: 350,
+    pros: [
+      "Excellent optimization",
+      "Enterprise-grade features",
+      "Strong ROI improvement"
+    ],
+    cons: [
+      "Very expensive",
+      "Enterprise only",
+      "Complex implementation"
+    ],
+    useCases: [
+      "Digital advertising",
+      "Campaign optimization",
+      "Ad spend optimization",
+      "Performance marketing",
+      "Enterprise advertising"
+    ],
+    tags: ["Advertising", "AI", "Optimization", "Enterprise", "ROI"]
+  },
+  {
+    id: "headlime",
+    name: "Headlime",
+    description: "AI copywriting tool specialized in creating high-converting landing pages and marketing copy for better conversions.",
+    shortDescription: "For landing pages and conversion copywriting",
+    category: "Text & Writing",
+    subcategory: "Landing Page Copy",
+    website: "https://headlime.com",
+    pricing: {
+      type: "paid",
+      startingPrice: 59,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Landing page copy",
+      "Conversion optimization",
+      "A/B testing support",
+      "Marketing templates",
+      "Copy analysis"
+    ],
+    platforms: ["web"],
+    rating: 4.1,
+    reviewCount: 780,
+    pros: [
+      "Conversion focused",
+      "Good templates",
+      "Marketing specific"
+    ],
+    cons: [
+      "Limited use cases",
+      "Expensive pricing",
+      "Basic AI features"
+    ],
+    useCases: [
+      "Landing page creation",
+      "Sales copy",
+      "Marketing campaigns",
+      "Conversion optimization",
+      "Ad copy"
+    ],
+    tags: ["Landing Pages", "Conversion", "Marketing", "Sales", "Copy"]
+  },
+  {
+    id: "userbot-ai",
+    name: "Userbot.ai",
+    description: "AI-powered conversation management platform for businesses to handle customer interactions and support queries efficiently.",
+    shortDescription: "Conversation management and customer interactions",
+    category: "Customer Service",
+    subcategory: "Conversation Management",
+    website: "https://userbot.ai",
+    pricing: {
+      type: "paid",
+      startingPrice: 29,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Conversation routing",
+      "AI responses",
+      "Customer profiling",
+      "Multi-channel support",
+      "Analytics dashboard"
+    ],
+    platforms: ["web", "mobile"],
+    rating: 4.0,
+    reviewCount: 920,
+    pros: [
+      "Good conversation handling",
+      "Multi-channel support",
+      "Reasonable pricing"
+    ],
+    cons: [
+      "Limited AI capabilities",
+      "Basic customization",
+      "Small user base"
+    ],
+    useCases: [
+      "Customer support",
+      "Conversation management",
+      "Support ticket routing",
+      "Customer engagement",
+      "Business communication"
+    ],
+    tags: ["Conversation", "Customer Service", "Management", "Support", "Business"]
+  },
+  {
+    id: "browse-ai",
+    name: "Browse AI",
+    description: "No-code web scraping platform that uses AI to extract data from websites automatically without programming knowledge.",
+    shortDescription: "For scraping web pages and data extraction",
+    category: "Development",
+    subcategory: "Web Scraping",
+    website: "https://browse.ai",
+    pricing: {
+      type: "freemium",
+      startingPrice: 48.75,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "No-code web scraping",
+      "AI data extraction",
+      "Scheduled monitoring",
+      "API access",
+      "Data export options"
+    ],
+    platforms: ["web", "api"],
+    rating: 4.4,
+    reviewCount: 2100,
+    pros: [
+      "No coding required",
+      "Reliable scraping",
+      "Good AI features"
+    ],
+    cons: [
+      "Can be expensive",
+      "Limited customization",
+      "Website dependency"
+    ],
+    useCases: [
+      "Web scraping",
+      "Data collection",
+      "Market research",
+      "Price monitoring",
+      "Lead generation"
+    ],
+    tags: ["Web Scraping", "Data", "No-code", "Automation", "Monitoring"]
+  },
+  {
+    id: "algolia",
+    name: "Algolia",
+    description: "AI-powered search and recommendation API platform that delivers fast, relevant search experiences for websites and apps.",
+    shortDescription: "For search and recommendation APIs",
+    category: "Development",
+    subcategory: "Search API",
+    website: "https://algolia.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 50,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Search API",
+      "AI recommendations",
+      "Real-time indexing",
+      "Analytics dashboard",
+      "A/B testing"
+    ],
+    platforms: ["web", "mobile", "api"],
+    rating: 4.7,
+    reviewCount: 3800,
+    pros: [
+      "Excellent search quality",
+      "Fast performance",
+      "Developer friendly"
+    ],
+    cons: [
+      "Can be expensive",
+      "Complex pricing",
+      "Technical implementation"
+    ],
+    useCases: [
+      "Website search",
+      "E-commerce search",
+      "App search",
+      "Content discovery",
+      "Product recommendations"
+    ],
+    tags: ["Search", "API", "Recommendations", "E-commerce", "Developer"],
+    isPopular: true
+  },
+  {
+    id: "photoroom",
+    name: "PhotoRoom",
+    description: "AI-powered photo editing app that removes backgrounds and creates professional product photos with ease.",
+    shortDescription: "For removing image backgrounds and photo editing",
+    category: "Image & Design",
+    subcategory: "Photo Editing",
+    website: "https://photoroom.com",
+    pricing: {
+      type: "freemium",
+      startingPrice: 9.99,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Background removal",
+      "Product photography",
+      "AI editing tools",
+      "Template library",
+      "Batch processing"
+    ],
+    platforms: ["mobile", "web"],
+    rating: 4.6,
+    reviewCount: 45000,
+    pros: [
+      "Excellent background removal",
+      "Easy to use",
+      "Great for e-commerce"
+    ],
+    cons: [
+      "Limited editing features",
+      "Subscription required",
+      "Mobile focused"
+    ],
+    useCases: [
+      "Product photography",
+      "E-commerce images",
+      "Social media content",
+      "Background removal",
+      "Photo editing"
+    ],
+    tags: ["Photo Editing", "Background Removal", "E-commerce", "Mobile", "Product"],
+    isPopular: true
+  },
+  {
+    id: "reply-io-ai",
+    name: "Reply.io's AI Sales Email Assistant",
+    description: "AI-powered email automation platform that generates personalized sales emails and manages email campaigns.",
+    shortDescription: "For email replies and sales automation",
+    category: "Marketing",
+    subcategory: "Email Marketing",
+    website: "https://reply.io",
+    pricing: {
+      type: "paid",
+      startingPrice: 70,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "AI email generation",
+      "Sales automation",
+      "Personalization engine",
+      "Campaign management",
+      "Response tracking"
+    ],
+    platforms: ["web", "api"],
+    rating: 4.3,
+    reviewCount: 1200,
+    pros: [
+      "Good personalization",
+      "Sales focused",
+      "Automation features"
+    ],
+    cons: [
+      "Expensive pricing",
+      "Learning curve",
+      "Sales focused only"
+    ],
+    useCases: [
+      "Sales emails",
+      "Email automation",
+      "Lead generation",
+      "Sales outreach",
+      "Email campaigns"
+    ],
+    tags: ["Email", "Sales", "Automation", "Personalization", "Outreach"]
+  },
+  {
+    id: "brand24",
+    name: "Brand24",
+    description: "AI-powered media monitoring tool that tracks brand mentions across the internet and provides sentiment analysis.",
+    shortDescription: "For media monitoring and brand tracking",
+    category: "Marketing",
+    subcategory: "Brand Monitoring",
+    website: "https://brand24.com",
+    pricing: {
+      type: "paid",
+      startingPrice: 79,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Brand mention tracking",
+      "Sentiment analysis",
+      "Influencer identification",
+      "Competitive analysis",
+      "Real-time monitoring"
+    ],
+    platforms: ["web", "mobile"],
+    rating: 4.4,
+    reviewCount: 2800,
+    pros: [
+      "Comprehensive monitoring",
+      "Good sentiment analysis",
+      "Real-time alerts"
+    ],
+    cons: [
+      "Expensive pricing",
+      "Can be overwhelming",
+      "Limited customization"
+    ],
+    useCases: [
+      "Brand monitoring",
+      "Reputation management",
+      "Competitive analysis",
+      "Social listening",
+      "Crisis management"
+    ],
+    tags: ["Brand Monitoring", "Sentiment", "Social Listening", "Reputation", "Analytics"]
+  },
+  {
+    id: "influencity",
+    name: "Influencity",
+    description: "AI-driven influencer marketing platform that helps brands find, analyze, and collaborate with the right influencers.",
+    shortDescription: "For influencer marketing and collaboration",
+    category: "Marketing",
+    subcategory: "Influencer Marketing",
+    website: "https://influencity.com",
+    pricing: {
+      type: "paid",
+      startingPrice: 168,
+      currency: "USD",
+      billingPeriod: "monthly"
+    },
+    features: [
+      "Influencer discovery",
+      "Performance analytics",
+      "Campaign management",
+      "Audience analysis",
+      "ROI tracking"
+    ],
+    platforms: ["web"],
+    rating: 4.2,
+    reviewCount: 560,
+    pros: [
+      "Comprehensive influencer data",
+      "Good analytics",
+      "Professional features"
+    ],
+    cons: [
+      "Very expensive",
+      "Complex interface",
+      "Enterprise focused"
+    ],
+    useCases: [
+      "Influencer marketing",
+      "Campaign management",
+      "Influencer discovery",
+      "Performance tracking",
+      "Brand partnerships"
+    ],
+    tags: ["Influencer", "Marketing", "Analytics", "Campaign", "Social Media"]
   }
 ];
