@@ -128,16 +128,20 @@ const Tools = () => {
               </div>
 
               {/* Filters - Scrollable with custom scrollbar */}
-              <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin">
-                <CategoryFilter
-                  selectedCategory={filters.category}
-                  onCategoryChange={(category) => updateFilters('category', category)}
-                  selectedPricing={filters.pricing || []}
-                  onPricingChange={(pricing) => updateFilters('pricing', pricing)}
-                  selectedPlatforms={filters.platforms || []}
-                  onPlatformChange={(platforms) => updateFilters('platforms', platforms)}
-                  toolCount={filteredTools.length}
-                />
+              <div className="flex-1 relative overflow-hidden">
+                <div className="h-full overflow-y-auto pr-2 scrollbar-thin">
+                  <CategoryFilter
+                    selectedCategory={filters.category}
+                    onCategoryChange={(category) => updateFilters('category', category)}
+                    selectedPricing={filters.pricing || []}
+                    onPricingChange={(pricing) => updateFilters('pricing', pricing)}
+                    selectedPlatforms={filters.platforms || []}
+                    onPlatformChange={(platforms) => updateFilters('platforms', platforms)}
+                    toolCount={filteredTools.length}
+                  />
+                </div>
+                {/* Fade gradient at bottom */}
+                <div className="absolute bottom-0 left-0 right-2 h-6 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
               </div>
             </div>
           </div>
