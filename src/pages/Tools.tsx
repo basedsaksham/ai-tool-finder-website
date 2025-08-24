@@ -89,6 +89,20 @@ const Tools = () => {
     }
   };
 
+  const removeFromComparison = (toolId: string) => {
+    setComparingTools(comparingTools.filter(t => t.id !== toolId));
+  };
+
+  const clearComparison = () => {
+    setComparingTools([]);
+  };
+
+  const goToComparePage = () => {
+    // Store selected tools in sessionStorage to pass to compare page
+    sessionStorage.setItem('compareTools', JSON.stringify(comparingTools));
+    navigate('/compare');
+  };
+
   const updateFilters = (key: keyof SearchFilters, value: any) => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
