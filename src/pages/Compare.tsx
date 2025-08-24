@@ -14,6 +14,23 @@ const Compare = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
 
+  // Load pre-selected tools from sessionStorage on component mount
+  useEffect(() => {
+    const storedTools = sessionStorage.getItem('compareTools');
+    if (storedTools) {
+      try {
+        const tools = JSON.parse(storedTools);
+        if (Array.isArray(tools)) {
+          setSelectedTools(tools);
+        }
+      } catch (error) {
+        console.error('Error parsing stored comparison tools:', error);
+      }
+      // Clear the stored tools after loading
+      sessionStorage.removeItem('compareTools');
+    }
+  }, []);
+
   const categories = [
     "Text & Writing",
     "Image & Design", 
